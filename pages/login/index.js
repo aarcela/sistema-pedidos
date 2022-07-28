@@ -12,7 +12,7 @@ import Image from "next/image";
 
 import { Box, Button, TextField, Typography, Card } from "@mui/material";
 import styles from "../../styles/Login.module.css";
-import { signOut } from "firebase/auth";
+import Loader from "../../components/loader/Loader";
 
 const Login = () => {
   const [user, loading, error] = useAuthState(auth);
@@ -27,24 +27,32 @@ const Login = () => {
   if (error) {
     console.log(error);
     setIsError(error.message);
+    setIsLoading(false);
   }
-  // if (loading) {
-  //   setIsLoading(true);
-  // }
 
+  console.log(loading);
   const passwordRecovery = async () => {
     setIsError("");
+    setIsLoading(false);
     email
       ? await (sendPasswordResetEmail(email), alert("Correo enviado"))
       : setIsError("Introduce un Correo");
   };
 
+  const handleLogin = async () => {
+    setIsLoading(true);
+    const loginResp = await signInWithEmailAndPassword(email, password);
+    console.log(loginResp);
+  };
+
   React.useEffect(() => {
+    !user && setIsLoading(false);
     user && router.push("/dashboard");
-  }, [user, router]);
+  }, [user, router, loading]);
 
   return (
     <Box className={styles.main_container}>
+      {isLoading === true && <Loader />}
       <Box
         sx={{
           alignItems: "center",
@@ -112,29 +120,32 @@ const Login = () => {
               }}
             />
 
-            {!isLoading ? (
-              <Button
-                sx={{
-                  backgroundColor: "#061241",
-                  color: "white",
-                  marginBotton: "2rem",
-                }}
-                aria-label="SignIn"
-                onClick={() => signInWithEmailAndPassword(email, password)}
-              >
-                Iniciar Sesión
-              </Button>
-            ) : (
-              <p>Loading...</p>
-            )}
-            {isError && <p>{isError}</p>}
-            <Typography
-              variant="span"
-              color="#EC2139"
+            <Button
+              sx={{
+                backgroundColor: "#061241",
+                borderRadius: "0",
+                color: "white",
+                marginBotton: "2rem",
+              }}
+              aria-label="SignIn"
+              onClick={handleLogin}
+            >
+              Iniciar Sesión
+            </Button>
+
+            <Button
+              sx={{
+                backgroundColor: "#EC2139",
+                borderRadius: "0",
+                color: "white",
+                marginBotton: "2rem",
+              }}
+              aria-label="SignIn"
               onClick={passwordRecovery}
             >
               Recuperar Contraseña
-            </Typography>
+            </Button>
+            {isError && <p>{isError}</p>}
           </Box>
         </Card>
         <Typography
@@ -145,7 +156,7 @@ const Login = () => {
         >
           ¿Desea formar parte de nuestros distribuidores?
         </Typography>
-        <Typography variant="h6" color="#505050">
+        <Typography variant="h6" color="#091A5D" component="strong">
           Escribanos a ventas@grupopuma.com.ve
         </Typography>
       </Box>

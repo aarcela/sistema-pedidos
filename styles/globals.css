@@ -1,9 +1,23 @@
+@font-face {
+  font-family: 'Montserrat';
+  src: url('../public/assets/fonts/montserrat/Montserrat-Regular.otf');
+  src: url('../public/assets/fonts/montserrat/Montserrat-Light.otf');
+  src: url('../public/assets/fonts/montserrat/Montserrat-Black.otf');
+  src: url('../public/assets/fonts/montserrat/Montserrat-ExtraLight.otf');
+
+  font-style: normal;
+
+}
+
+
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  /* font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif; */
+
 }
 
 a {

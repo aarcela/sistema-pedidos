@@ -71,8 +71,11 @@ export default function NavBar() {
 
   return (
     <>
-      <Box sx={{ flexGrow: 1, backgroundColor: "#E7E7E7" }}>
-        <AppBar position="static">
+      <Box>
+        <AppBar
+          position="static"
+          sx={{ flexGrow: 1, backgroundColor: "#E7E7E7", color: "#091A5D" }}
+        >
           <Toolbar>
             <IconButton
               size="large"
@@ -84,7 +87,10 @@ export default function NavBar() {
             >
               <MenuIcon />
             </IconButton>
-            <Button color="inherit">
+            <Button
+              startIcon={<ShoppingCart />}
+              sx={{ backgroundColor: "#091A5D", color: "#E7E7E7" }}
+            >
               Carrito {open} - {name} {roles?.isAdmin ? "Admin" : "Cliente"}
             </Button>
           </Toolbar>
