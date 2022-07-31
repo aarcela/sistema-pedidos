@@ -18,7 +18,7 @@ const Loader = () => {
         zIndex: "1",
       }}
     >
-      <Image src="/images/logo.png" alt="logo" width="350rem" height="150" />
+      <Image src="/images/loading.gif" alt="logo" width="350rem" height="350" />
     </Box>
   );
 };
