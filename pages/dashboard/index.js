@@ -57,7 +57,7 @@ function CustomToolbar() {
   );
 }
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const res = await fetch(`${process.env.NEXT_PROFIT_API_URL}/inventario`);
   const data = await res.json();
 
