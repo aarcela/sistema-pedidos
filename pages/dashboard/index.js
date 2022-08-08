@@ -1,11 +1,7 @@
 import React from "react";
 import {
-  Autocomplete,
   Box,
-  Grid,
   Pagination,
-  Slider,
-  TextField,
   Typography,
 } from "@mui/material";
 import NavBar from "../../components/navBar/NavBar";
@@ -18,18 +14,26 @@ import {
 
 const columns = [
   {
-    field: "CodAlmacen",
-    headerName: "Código Almacén",
+    field: "Descripcion",
+    headerName: "Descripcion",
     headerClassName: "primary-bg",
     sortable: false,
     flex: 1,
-    valueGetter: (params) =>
-      `${params.row.CodAlmacen || ""} ${params.row.CodArticulo || ""}`,
+    // valueGetter: (params) =>
+    //   `${params.row.CodAlmacen || ""} ${params.row.CodArticulo || ""}`,
   },
   {
-    field: "CodArticulo",
-    description: "Artículo",
-    headerName: "Artículo",
+    field: "Categoria",
+    description: "Categoría del artículo",
+    headerName: "Categoría",
+    sortable: false,
+    flex: 1,
+    headerClassName: "primary-bg",
+  },
+  {
+    field: "Precio",
+    description: "Precio del artículo",
+    headerName: "Precio",
     sortable: false,
     flex: 1,
     headerClassName: "primary-bg",
@@ -70,7 +74,7 @@ const Dashboard = ({ data }) => {
           flexDirection: "column",
           padding: "3rem",
           height: "100vh",
-          width: "100vw",
+          width: "97vw",
         }}
       >
         <Typography
@@ -83,46 +87,6 @@ const Dashboard = ({ data }) => {
           Listado de Productos
         </Typography>
 
-        {/* <Grid container spacing={1} sx={{ marginBottom: "2rem" }}>
-          <Grid item xs={4}>
-            <Autocomplete
-              disablePortal
-              id="combo-box-demo"
-              options={columns}
-              sx={{ width: 300 }}
-              renderInput={(params) => <TextField {...params} label="Marca" />}
-            />
-          </Grid>
-          <Grid item xs={4}>
-            <Autocomplete
-              disablePortal
-              id="combo-box-demo"
-              options={columns}
-              sx={{ width: 300 }}
-              renderInput={(params) => (
-                <TextField {...params} label="Categoría" />
-              )}
-            />
-          </Grid>
-          <Grid item xs={4}>
-            <Autocomplete
-              freeSolo
-              id="free-solo-2-demo"
-              disableClearable
-              options={columns.map((option) => option.label)}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Código"
-                  InputProps={{
-                    ...params.InputProps,
-                    type: "search",
-                  }}
-                />
-              )}
-            />
-          </Grid>
-        </Grid> */}
         <div style={{ flexGrow: 1 }}>
           <DataGrid
             rows={data}

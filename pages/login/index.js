@@ -30,7 +30,6 @@ const Login = () => {
     setIsLoading(false);
   }
 
-  console.log(loading);
   const passwordRecovery = async () => {
     setIsError("");
     setIsLoading(false);
@@ -39,10 +38,11 @@ const Login = () => {
       : setIsError("Introduce un Correo");
   };
 
-  const handleLogin = async () => {
-    setIsLoading(true);
-    const loginResp = await signInWithEmailAndPassword(email, password);
-    console.log(loginResp);
+  const handleLogin = () => {
+    if (email && password) {
+      setIsLoading(true);
+      signInWithEmailAndPassword(email, password);
+    }
   };
 
   React.useEffect(() => {
@@ -145,7 +145,7 @@ const Login = () => {
             >
               Recuperar Contraseña
             </Button>
-            {isError && <p>{isError}</p>}
+            {isError && <span>{isError}</span>}
           </Box>
         </Card>
         <Typography

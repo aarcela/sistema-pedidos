@@ -69,6 +69,12 @@ export default function NavBar() {
     setOpen(open);
   };
 
+  const navigateTo = (navigation) => {
+
+    const page =  navigation.toLowerCase()
+    router.push(`/${page}`);
+  }
+
   return (
     <>
       <Box>
@@ -121,9 +127,9 @@ export default function NavBar() {
             Menu
           </Typography>
           <List>
-            {["Inicio", "Catágolo", "Pedidos"].map((text, index) => (
+            {["Inicio", "Dashboard", "Pedidos"].map((text, index) => (
               <ListItem key={text} disablePadding>
-                <ListItemButton>
+                <ListItemButton onClick={() => navigateTo(text)}>
                   <ListItemIcon>
                     {index === 0 && <Home sx={{ color: "white" }} />}
                     {index === 1 && <ViewList sx={{ color: "white" }} />}
