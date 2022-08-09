@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  Box,
-  Pagination,
-  Typography,
-} from "@mui/material";
+import { Box, Pagination, Typography } from "@mui/material";
 import NavBar from "../../components/navBar/NavBar";
 import {
   DataGrid,
@@ -48,6 +44,16 @@ const columns = [
   },
 ];
 
+const mockInventory = [
+  {
+    Descripcion: "loading",
+    Categoria: "loading",
+    Precio: "loading",
+    Disponible: "loading",
+    CodArticulo: "00",
+  },
+];
+
 function CustomToolbar() {
   return (
     <GridToolbarContainer>
@@ -57,14 +63,31 @@ function CustomToolbar() {
   );
 }
 
-export async function getStaticProps() {
-  const res = await fetch(`${process.env.NEXT_PROFIT_API_URL}/inventario`);
-  const data = await res.json();
+// export async function getServerSideProps() {
 
-  return { props: { data } };
-}
+//     const res = await fetch(`${process.env.NEXT_PROFIT_API_URL}/inventario`);
+//     const data = await res.json();
+//     return { props: { data } };
 
-const Dashboard = ({ data }) => {
+// }
+
+const Dashboard = () => {
+  const [inventory, setInventory] = React.useState([]);
+
+  React.useEffect(() => {
+    const fetchInventory = async () => {
+      // const res = await fetch(`${process.env.NEXT_PROFIT_API_URL}/inventario`);
+      const res = await fetch(
+        `http://intelinet.com.ve:8090/apigrupopuma/inventario`
+      );
+      const data = await res.json();
+      setInventory(data);
+      console.log(data);
+    };
+
+    fetchInventory();
+  }, [inventory]);
+
   return (
     <>
       <NavBar></NavBar>
@@ -88,33 +111,37 @@ const Dashboard = ({ data }) => {
         </Typography>
 
         <div style={{ flexGrow: 1 }}>
-          <DataGrid
-            rows={data}
-            columns={columns}
-            pageSize={7}
-            rowsPerPageOptions={[2]}
-            getRowId={(row) => row.CodArticulo}
-            components={{ Toolbar: CustomToolbar }}
-            sx={{
-              borderRadius: "0",
-              ".primary-bg": {
-                backgroundColor: "#091a5d",
-                borderRadius: "0",
-                color: "white",
-                width: "100%",
-              },
-              ".even": {
-                backgroundColor: "#E7E7E7",
-              },
-              ".odd": {
-                backgroundColor: "white",
-              },
-            }}
-            getRowClassName={(params) =>
-              params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
-            }
-          />
-          <Pagination numOfLinks={6} page={data} total={100} />
+          {inventory && (
+            <>
+              <DataGrid
+                rows={inventory}
+                columns={columns}
+                pageSize={7}
+                rowsPerPageOptions={[2]}
+                getRowId={(row) => row.CodArticulo}
+                components={{ Toolbar: CustomToolbar }}
+                sx={{
+                  borderRadius: "0",
+                  ".primary-bg": {
+                    backgroundColor: "#091a5d",
+                    borderRadius: "0",
+                    color: "white",
+                    width: "100%",
+                  },
+                  ".even": {
+                    backgroundColor: "#E7E7E7",
+                  },
+                  ".odd": {
+                    backgroundColor: "white",
+                  },
+                }}
+                getRowClassName={(params) =>
+                  params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
+                }
+              />
+              {/* <Pagination numOfLinks={6} page={inventory} total={100} /> */}
+            </>
+          )}
         </div>
       </Box>
       <style jsx>

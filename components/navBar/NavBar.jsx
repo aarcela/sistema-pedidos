@@ -48,7 +48,6 @@ export default function NavBar() {
       );
       const doc = await getDocs(q);
       const data = doc.docs[0].data();
-      console.log("User", data);
       setName(data.name);
       setRoles(data.roles);
     } catch (err) {
