@@ -1,12 +1,7 @@
 import React from "react";
-import { Box, Pagination, Typography } from "@mui/material";
 import NavBar from "../../components/navBar/NavBar";
-import {
-  DataGrid,
-  GridToolbarContainer,
-  GridToolbarDensitySelector,
-  GridToolbarFilterButton,
-} from "@mui/x-data-grid";
+import GpTable from "../../components/gp-table/GpTable";
+import GpButton from "../../components/gp-button/GpButton";
 
 const columns = [
   {
@@ -42,26 +37,22 @@ const columns = [
     type: "number",
     headerClassName: "primary-bg",
   },
-];
-
-const mockInventory = [
   {
-    Descripcion: "loading",
-    Categoria: "loading",
-    Precio: "loading",
-    Disponible: "loading",
-    CodArticulo: "00",
+    field: "add",
+    sortable: false,
+    headerName: "Acciones",
+    flex: 1,
+    headerClassName: "primary-bg",
+    renderCell: (cellValues) => {
+      return (
+        <GpButton
+          text="Añadir"
+          clickFunction={(event) => addToCart(event, cellValues)}
+        />
+      );
+    },
   },
 ];
-
-function CustomToolbar() {
-  return (
-    <GridToolbarContainer>
-      <GridToolbarFilterButton />
-      <GridToolbarDensitySelector />
-    </GridToolbarContainer>
-  );
-}
 
 // export async function getServerSideProps() {
 
@@ -70,88 +61,35 @@ function CustomToolbar() {
 //     return { props: { data } };
 
 // }
+const addToCart = (e, cell) => {
+  console.log("Clickec", cell);
+};
 
 const Dashboard = () => {
   const [inventory, setInventory] = React.useState([]);
 
   React.useEffect(() => {
     const fetchInventory = async () => {
-      // const res = await fetch(`${process.env.NEXT_PROFIT_API_URL}/inventario`);
+      // const res = await fetch(
+      //   `${process.env.NEXT_PUBLIC_PROFIT_API_URL}/inventario`
+      // );
       const res = await fetch(
         `http://intelinet.com.ve:8090/apigrupopuma/inventario`
       );
       const data = await res.json();
+      // data.map((row) => {
+      //   row.add = "Añadir";
+      // });
       setInventory(data);
-      console.log(data);
     };
 
     fetchInventory();
-  }, [inventory]);
+  }, []);
 
   return (
     <>
       <NavBar></NavBar>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          padding: "3rem",
-          height: "100vh",
-          width: "97vw",
-        }}
-      >
-        <Typography
-          component="strong"
-          variant="h4"
-          color="#505050"
-          fontWeight="lighter"
-          sx={{ marginBottom: "2rem" }}
-        >
-          Listado de Productos
-        </Typography>
-
-        <div style={{ flexGrow: 1 }}>
-          {inventory && (
-            <>
-              <DataGrid
-                rows={inventory}
-                columns={columns}
-                pageSize={7}
-                rowsPerPageOptions={[2]}
-                getRowId={(row) => row.CodArticulo}
-                components={{ Toolbar: CustomToolbar }}
-                sx={{
-                  borderRadius: "0",
-                  ".primary-bg": {
-                    backgroundColor: "#091a5d",
-                    borderRadius: "0",
-                    color: "white",
-                    width: "100%",
-                  },
-                  ".even": {
-                    backgroundColor: "#E7E7E7",
-                  },
-                  ".odd": {
-                    backgroundColor: "white",
-                  },
-                }}
-                getRowClassName={(params) =>
-                  params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
-                }
-              />
-              {/* <Pagination numOfLinks={6} page={inventory} total={100} /> */}
-            </>
-          )}
-        </div>
-      </Box>
-      <style jsx>
-        {`
-          .primary-bg {
-            background-color: #091a5d;
-            color: white;
-          }
-        `}
-      </style>
+      <GpTable columns={columns} data={inventory}></GpTable>
     </>
   );
 };

@@ -23,6 +23,7 @@ import { useRouter } from "next/router";
 import { auth, db } from "../../firebase/firebaseConfig";
 import { query, collection, getDocs, where } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
+import GpButton from "../gp-button/GpButton";
 
 export default function NavBar() {
   const router = useRouter();
@@ -69,10 +70,9 @@ export default function NavBar() {
   };
 
   const navigateTo = (navigation) => {
-
-    const page =  navigation.toLowerCase()
+    const page = navigation.toLowerCase();
     router.push(`/${page}`);
-  }
+  };
 
   return (
     <>
@@ -92,12 +92,7 @@ export default function NavBar() {
             >
               <MenuIcon />
             </IconButton>
-            <Button
-              startIcon={<ShoppingCart />}
-              sx={{ backgroundColor: "#091A5D", color: "#E7E7E7" }}
-            >
-              Carrito {open} - {name} {roles?.isAdmin ? "Admin" : "Cliente"}
-            </Button>
+            <GpButton icon={<ShoppingCart />} text={"Carrito"}></GpButton>
           </Toolbar>
         </AppBar>
       </Box>
