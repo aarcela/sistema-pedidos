@@ -70,11 +70,16 @@ const Dashboard = () => {
 
   React.useEffect(() => {
     const fetchInventory = async () => {
+      const options = {
+        method: "GET",
+        mode: "no-cors",
+      };
       // const res = await fetch(
       //   `${process.env.NEXT_PUBLIC_PROFIT_API_URL}/inventario`
       // );
       const res = await fetch(
-        `http://intelinet.com.ve:8090/apigrupopuma/inventario`
+        `https://intelinet.com.ve:444/apigrupopuma/inventario`,
+        options
       );
       const data = await res.json();
       // data.map((row) => {

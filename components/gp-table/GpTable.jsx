@@ -44,7 +44,7 @@ const GpTable = ({ columns, data }) => {
               <DataGrid
                 rows={data}
                 columns={columns}
-                pageSize={7}
+                pageSize={5}
                 rowsPerPageOptions={[2]}
                 getRowId={(row) => row.CodArticulo}
                 components={{ Toolbar: CustomToolbar }}
