@@ -78,7 +78,7 @@ const Login = () => {
         <Typography variant="h4" color="#505050" fontWeight="lighter">
           Bienvenido a nuestro
         </Typography>
-        <Typography variant="h4" component="strong">
+        <Typography variant="h4" fontWeight="bold">
           {" "}
           portal de ventas
         </Typography>

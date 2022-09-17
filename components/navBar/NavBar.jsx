@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
+  CssBaseline,
   Drawer,
   List,
   ListItem,
@@ -25,7 +26,7 @@ import { query, collection, getDocs, where } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import GpButton from "../gp-button/GpButton";
 
-export default function NavBar() {
+export default function NavBar({ children }) {
   const router = useRouter();
 
   const [user] = useAuthState(auth);
@@ -76,10 +77,16 @@ export default function NavBar() {
 
   return (
     <>
-      <Box>
+      <Box sx={{ display: "flex" }}>
+        <CssBaseline />
         <AppBar
-          position="static"
-          sx={{ flexGrow: 1, backgroundColor: "#E7E7E7", color: "#091A5D" }}
+          position="fixed"
+          sx={{
+            flexGrow: 1,
+            backgroundColor: "#E7E7E7",
+            color: "#091A5D",
+            width: `calc(100% - 240px)`,
+          }}
         >
           <Toolbar>
             <IconButton
@@ -90,61 +97,81 @@ export default function NavBar() {
               sx={{ mr: 2 }}
               onClick={toggleDrawer(true)}
             >
-              <MenuIcon />
+              {/* <MenuIcon /> */}
             </IconButton>
-            <GpButton icon={<ShoppingCart />} text={"Carrito"}></GpButton>
+            <GpButton
+              clickFunction={() => navigateTo("cart")}
+              icon={<ShoppingCart />}
+              text={"Carrito"}
+            ></GpButton>
           </Toolbar>
         </AppBar>
-      </Box>
-      <Drawer anchor="left" open={open} onClose={toggleDrawer(false)}>
-        <Box
+        <Drawer
+          anchor="left"
+          variant="permanent"
           sx={{
-            backgroundColor: "#091A5D",
-            color: "white",
-            height: "100vh",
-            textAlign: "center",
             width: 250,
-            paddingTop: "1rem",
+            flexShrink: 0,
+            "& .MuiDrawer-paper": {
+              width: 250,
+              boxSizing: "border-box",
+            },
           }}
-          role="presentation"
-          onClick={toggleDrawer(false)}
-          onKeyDown={toggleDrawer(false)}
         >
-          <Image
-            sx={{ marginBottom: "1rem", marginTop: "1rem" }}
-            src="/images/logo.png"
-            alt="logo"
-            width="197"
-            height="81"
-          />
-          <Typography variant="h6" fontWeight="lighter">
-            Menu
-          </Typography>
-          <List>
-            {["Inicio", "Dashboard", "Pedidos"].map((text, index) => (
-              <ListItem key={text} disablePadding>
-                <ListItemButton onClick={() => navigateTo(text)}>
-                  <ListItemIcon>
-                    {index === 0 && <Home sx={{ color: "white" }} />}
-                    {index === 1 && <ViewList sx={{ color: "white" }} />}
-                    {index === 2 && <ShoppingCart sx={{ color: "white" }} />}
-                  </ListItemIcon>
-                  <ListItemText primary={text} />
-                </ListItemButton>
-              </ListItem>
-            ))}
-            <ListItemButton
-              sx={{ backgroundColor: "#081148" }}
-              onClick={logOut}
-            >
-              <ListItemIcon>
-                <Logout sx={{ color: "#EC2139" }} />
-              </ListItemIcon>
-              <ListItemText primary="Cerrar sesión" sx={{ color: "#EC2139" }} />
-            </ListItemButton>
-          </List>
+          <Box
+            sx={{
+              backgroundColor: "#091A5D",
+              color: "white",
+              height: "100vh",
+              overflowX: "hidden",
+              paddingTop: "1rem",
+              textAlign: "center",
+              width: 250,
+            }}
+            role="presentation"
+          >
+            <Image
+              sx={{ marginBottom: "1rem", marginTop: "1rem" }}
+              src="/images/logo.png"
+              alt="logo"
+              width="197"
+              height="81"
+            />
+            <Typography variant="h6" fontWeight="lighter">
+              Menu
+            </Typography>
+            <List>
+              {["Inicio", "Dashboard", "Pedidos"].map((text, index) => (
+                <ListItem key={text} disablePadding>
+                  <ListItemButton onClick={() => navigateTo(text)}>
+                    <ListItemIcon>
+                      {index === 0 && <Home sx={{ color: "white" }} />}
+                      {index === 1 && <ViewList sx={{ color: "white" }} />}
+                      {index === 2 && <ShoppingCart sx={{ color: "white" }} />}
+                    </ListItemIcon>
+                    <ListItemText primary={text} />
+                  </ListItemButton>
+                </ListItem>
+              ))}
+              <ListItemButton
+                sx={{ backgroundColor: "#081148" }}
+                onClick={logOut}
+              >
+                <ListItemIcon>
+                  <Logout sx={{ color: "#EC2139" }} />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Cerrar sesión"
+                  sx={{ color: "#EC2139" }}
+                />
+              </ListItemButton>
+            </List>
+          </Box>
+        </Drawer>
+        <Box component="main" sx={{ flexGrow: 1, mt: 3, width: "80%" }}>
+          {children}
         </Box>
-      </Drawer>
+      </Box>
     </>
   );
 }

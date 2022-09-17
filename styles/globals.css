@@ -1,23 +1,22 @@
 @font-face {
-  font-family: 'Montserrat';
-  src: url('../public/assets/fonts/montserrat/Montserrat-Regular.otf');
-  src: url('../public/assets/fonts/montserrat/Montserrat-Light.otf');
-  src: url('../public/assets/fonts/montserrat/Montserrat-Black.otf');
-  src: url('../public/assets/fonts/montserrat/Montserrat-ExtraLight.otf');
+  font-family: "Montserrat";
+  /* src: url("../public/assets/fonts/montserrat/Montserrat-Light.otf");
+  src: url("../public/assets/fonts/montserrat/Montserrat-Black.otf");
+  src: url("../public/assets/fonts/montserrat/Montserrat-ExtraLight.otf");
+  src: url("../public/assets/fonts/montserrat/Montserrat-ExtraBold.otf");
+  src: url("../public/assets/fonts/montserrat/Montserrat-Thin.otf"); */
+  src: url("../public/assets/fonts/montserrat/Montserrat-Regular.otf");
 
   font-style: normal;
-
 }
-
-
 
 html,
 body {
   padding: 0;
   margin: 0;
+  font-weight: 200;
   /* font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif; */
-
 }
 
 a {
@@ -29,20 +28,24 @@ a {
   box-sizing: border-box;
 }
 
- td,  th {
+td,
+th {
   border: none;
   padding: 8px;
 }
 
- tr:nth-child(even){background-color: #f2f2f2;}
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
 
- tr:hover {background-color: #ddd;}
+tr:hover {
+  background-color: #ddd;
+}
 
- th {
+th {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
-  background-color: #091A5D;
-  color: white
-
- }
+  background-color: #091a5d;
+  color: white;
+}

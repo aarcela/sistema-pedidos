@@ -2,12 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import Button from "@mui/material/Button";
 
-const GpButton = ({ icon = "", text, clickFunction }) => {
+const GpButton = ({ icon = "", text, bgColor = "#091A5D", clickFunction }) => {
   return (
     <Button
       startIcon={icon}
       sx={{
-        backgroundColor: "#091A5D",
+        backgroundColor: bgColor,
         color: "white",
         borderRadius: "0",
       }}

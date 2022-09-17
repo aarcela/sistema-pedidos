@@ -1,5 +1,6 @@
 import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
-
+import { Provider } from "react-redux";
+import { store } from "../redux/store";
 import "../styles/globals.css";
 
 function MyApp({ Component, pageProps }) {
@@ -31,10 +32,13 @@ function MyApp({ Component, pageProps }) {
       fontFamily: "Montserrat",
     },
   });
+
   return (
-    <ThemeProvider theme={theme}>
-      <Component {...pageProps} />
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <Component {...pageProps} />
+      </ThemeProvider>
+    </Provider>
   );
 }
 

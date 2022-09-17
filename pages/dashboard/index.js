@@ -2,71 +2,82 @@ import React from "react";
 import NavBar from "../../components/navBar/NavBar";
 import GpTable from "../../components/gp-table/GpTable";
 import GpButton from "../../components/gp-button/GpButton";
-const columns = [
-  {
-    field: "Descripcion",
-    headerName: "Descripcion",
-    headerClassName: "primary-bg",
-    sortable: false,
-    flex: 1,
-    // valueGetter: (params) =>
-    //   `${params.row.CodAlmacen || ""} ${params.row.CodArticulo || ""}`,
-  },
-  {
-    field: "Categoria",
-    description: "Categoría del artículo",
-    headerName: "Categoría",
-    sortable: false,
-    flex: 1,
-    headerClassName: "primary-bg",
-  },
-  {
-    field: "Precio",
-    description: "Precio del artículo",
-    headerName: "Precio",
-    sortable: false,
-    flex: 1,
-    headerClassName: "primary-bg",
-  },
-  {
-    field: "Disponible",
-    sortable: false,
-    headerName: "Disponibilidad",
-    flex: 1,
-    type: "number",
-    headerClassName: "primary-bg",
-  },
-  {
-    field: "add",
-    sortable: false,
-    headerName: "Acciones",
-    flex: 1,
-    headerClassName: "primary-bg",
-    renderCell: (cellValues) => {
-      return (
-        <GpButton
-          text="Añadir"
-          clickFunction={(event) => addToCart(event, cellValues)}
-        />
-      );
-    },
-  },
-];
-
-// export async function getServerSideProps() {
-//   const res = await fetch(
-//     "https://intelinet.com.ve:444/apigrupopuma/inventario"
-//   );
-//   const inventory = await res.json();
-//   return { props: { inventory } };
-// }
-const addToCart = (e, cell) => {
-  console.log("Clickec", cell);
-  alert("Comming soon in next Sprint 🙌🏼");
-};
+// import { cartReducer } from "../../redux/reducer/cartReducer";
+import { types } from "../../types/types";
+import { useDispatch, useSelector } from "react-redux";
+import { listItem } from "../../redux/actionTypes";
 
 const Dashboard = () => {
   const [inventory, setInventory] = React.useState([]);
+  // const [state, dispatch] = React.useReducer(cartReducer, { cart: [] });
+  const dispatch = useDispatch();
+  const columns = [
+    {
+      field: "Descripcion",
+      headerName: "Descripcion",
+      headerClassName: "primary-bg",
+      sortable: false,
+      flex: 1,
+      // valueGetter: (params) =>
+      //   `${params.row.CodAlmacen || ""} ${params.row.CodArticulo || ""}`,
+    },
+    {
+      field: "Categoria",
+      description: "Categoría del artículo",
+      headerName: "Categoría",
+      sortable: false,
+      flex: 1,
+      headerClassName: "primary-bg",
+    },
+    {
+      field: "Precio",
+      description: "Precio del artículo",
+      headerName: "Precio",
+      sortable: false,
+      flex: 0.5,
+      headerClassName: "primary-bg",
+      // width: 70,
+    },
+    {
+      field: "Disponible",
+      sortable: false,
+      headerName: "Disponibilidad",
+      flex: 0.5,
+      type: "number",
+      headerClassName: "primary-bg",
+      // width: 70,
+      renderCell: (cellValues) => {
+        return cellValues.row.Disponible > 0 ? (
+          <GpButton text="Sí" bgColor="#48D98A" />
+        ) : (
+          <GpButton text="No" bgColor="#EC2139" />
+        );
+      },
+    },
+    {
+      field: "add",
+      sortable: false,
+      headerName: "Acciones",
+      // flex: 1,
+      headerClassName: "primary-bg",
+      renderCell: (cellValues) => {
+        return (
+          <GpButton
+            text="Añadir"
+            clickFunction={
+              () => dispatch(listItem(cellValues))
+              // dispatch({ type: types.addItem, payload: cellValues })
+            }
+          />
+        );
+      },
+    },
+  ];
+
+  // const AddToCart = (e, cell) => {
+  //   console.log("Clicked", cell);
+  //   dispatch(listItem(cell));
+  // };
 
   React.useEffect(() => {
     const fetchInventory = async () => {
@@ -90,10 +101,15 @@ const Dashboard = () => {
 
   return (
     <>
-      <NavBar></NavBar>
-      {inventory.length !== 0 && (
-        <GpTable columns={columns} data={inventory}></GpTable>
-      )}
+      <NavBar>
+        {inventory.length !== 0 && (
+          <GpTable
+            columns={columns}
+            data={inventory}
+            title="Listado de Productos"
+          ></GpTable>
+        )}
+      </NavBar>
     </>
   );
 };

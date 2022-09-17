@@ -16,7 +16,7 @@ function CustomToolbar() {
   );
 }
 
-const GpTable = ({ columns, data }) => {
+const GpTable = ({ columns, data, title }) => {
   return (
     <>
       <Box
@@ -24,8 +24,8 @@ const GpTable = ({ columns, data }) => {
           display: "flex",
           flexDirection: "column",
           padding: "3rem",
-          height: "100vh",
-          width: "97vw",
+          height: "95vh",
+          width: "100%",
         }}
       >
         <Typography
@@ -35,7 +35,7 @@ const GpTable = ({ columns, data }) => {
           fontWeight="lighter"
           sx={{ marginBottom: "2rem" }}
         >
-          Listado de Productos
+          {title}
         </Typography>
 
         <div style={{ flexGrow: 1 }}>
