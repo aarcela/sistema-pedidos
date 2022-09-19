@@ -5,7 +5,7 @@ import GpButton from "../../components/gp-button/GpButton";
 // import { cartReducer } from "../../redux/reducer/cartReducer";
 import { types } from "../../types/types";
 import { useDispatch, useSelector } from "react-redux";
-import { listItem } from "../../redux/actionTypes";
+import { addItem } from "../../redux/actionTypes";
 
 const Dashboard = () => {
   const [inventory, setInventory] = React.useState([]);
@@ -65,7 +65,7 @@ const Dashboard = () => {
           <GpButton
             text="Añadir"
             clickFunction={
-              () => dispatch(listItem(cellValues))
+              () => dispatch(addItem(cellValues.row))
               // dispatch({ type: types.addItem, payload: cellValues })
             }
           />
@@ -73,11 +73,6 @@ const Dashboard = () => {
       },
     },
   ];
-
-  // const AddToCart = (e, cell) => {
-  //   console.log("Clicked", cell);
-  //   dispatch(listItem(cell));
-  // };
 
   React.useEffect(() => {
     const fetchInventory = async () => {

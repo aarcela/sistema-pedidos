@@ -1,11 +1,14 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import GpButton from "../../components/gp-button/GpButton";
 import GpTable from "../../components/gp-table/GpTable";
 import NavBar from "../../components/navBar/NavBar";
-import { types } from "../../types/types";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { removeItem } from "../../redux/actionTypes";
+import { Box } from "@mui/system";
 
 const Cart = () => {
+  const dispatch = useDispatch();
   const columns = [
     {
       field: "Descripcion",
@@ -28,15 +31,17 @@ const Cart = () => {
     {
       field: "add",
       sortable: false,
-      headerName: "Acciones",
+      headerName: "Borrar",
       // flex: 1,
       headerClassName: "primary-bg",
       renderCell: (cellValues) => {
         return (
           <GpButton
-            text="Borrar"
+            icon={<DeleteIcon />}
+            bgColor="transparent"
+            textColor="#505050"
             clickFunction={() =>
-              dispatch({ type: types.addItem, payload: cellValues })
+              dispatch(removeItem(cellValues.row.CodArticulo))
             }
           />
         );
@@ -45,13 +50,39 @@ const Cart = () => {
   ];
 
   const data = useSelector((state) => state.cart);
-  console.log(data);
+  const [cart, setCart] = React.useState([]);
 
+  React.useEffect(() => {
+    setCart(data);
+  }, [data]);
+
+  console.log("Cart state cart redux: ", cart);
   // store.subscribe(() => console.log(store.getState()));
 
   return (
     <NavBar>
-      {/* <GpTable columns={columns} data={cart} title="Carrito"></GpTable> */}
+      <GpTable
+        columns={columns}
+        data={cart}
+        title="Carrito"
+        showTotal="true"
+      ></GpTable>
+      <Box
+        sx={{
+          justifyContent: "flex-end",
+          display: "flex",
+          flexDirection: "row",
+          padding: "0 3rem 3rem 3rem",
+          width: "100%",
+        }}
+      >
+        {cart.length > 0 && (
+          <GpButton
+            text="Confirmar Pedido"
+            clickFunction={() => alert("Siguiente Sprint - Creando Pedidos")}
+          ></GpButton>
+        )}
+      </Box>
     </NavBar>
   );
 };

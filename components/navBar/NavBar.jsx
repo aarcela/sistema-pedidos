@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
+  Badge,
   CssBaseline,
   Drawer,
   List,
@@ -25,6 +26,7 @@ import { auth, db } from "../../firebase/firebaseConfig";
 import { query, collection, getDocs, where } from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import GpButton from "../gp-button/GpButton";
+import { useSelector } from "react-redux";
 
 export default function NavBar({ children }) {
   const router = useRouter();
@@ -33,6 +35,7 @@ export default function NavBar({ children }) {
   const [open, setOpen] = React.useState(false);
   const [name, setName] = React.useState("");
   const [roles, setRoles] = React.useState([]);
+  const data = useSelector((state) => state.cart);
   const logOut = () => {
     signOut(auth);
     router.push("/login");
@@ -101,7 +104,11 @@ export default function NavBar({ children }) {
             </IconButton>
             <GpButton
               clickFunction={() => navigateTo("cart")}
-              icon={<ShoppingCart />}
+              icon={
+                <Badge badgeContent={data.length} color="secondary">
+                  <ShoppingCart />
+                </Badge>
+              }
               text={"Carrito"}
             ></GpButton>
           </Toolbar>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   DataGrid,
   GridToolbarContainer,
@@ -16,7 +16,8 @@ function CustomToolbar() {
   );
 }
 
-const GpTable = ({ columns, data, title }) => {
+const GpTable = ({ columns, data, title, showTotal = false }) => {
+  const [total, setTotal] = useState(0);
   return (
     <>
       <Box
@@ -44,16 +45,22 @@ const GpTable = ({ columns, data, title }) => {
               <DataGrid
                 rows={data}
                 columns={columns}
-                pageSize={7}
-                rowsPerPageOptions={[2]}
+                // pageSize={7}
+                // rowsPerPageOptions={[2]}
                 getRowId={(row) => row.CodArticulo}
                 components={{ Toolbar: CustomToolbar }}
-                // onCellClick={(params, event) => {
-                //   if (!event.ctrlKey) {
-                //     event.defaultMuiPrevented = true;
-                //     console.log("Params", params);
-                //   }
-                // }}
+                onStateChange={() => {
+                  if (showTotal) {
+                    const total = data
+                      .map((item) => parseFloat(item.Precio))
+                      .reduce((a, b) => a + b, 0);
+                    showTotal && setTotal(total);
+                    console.log(total);
+                  }
+                }}
+                getRowClassName={(params) =>
+                  params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
+                }
                 sx={{
                   borderRadius: "0",
                   ".primary-bg": {
@@ -72,15 +79,32 @@ const GpTable = ({ columns, data, title }) => {
                     color: "red",
                   },
                 }}
-                getRowClassName={(params) =>
-                  params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
-                }
               />
               <Pagination numOfLinks={6} page={data} total={100} />
             </>
           )}
         </div>
       </Box>
+      {showTotal && (
+        <Box
+          sx={{
+            justifyContent: "flex-end",
+            display: "flex",
+            flexDirection: "row",
+            padding: "3rem",
+            width: "100%",
+          }}
+        >
+          <Typography
+            component="strong"
+            variant="h4"
+            color="#505050"
+            fontWeight="bold"
+          >
+            Total: {total} USD
+          </Typography>
+        </Box>
+      )}
       <style jsx>
         {`
           .primary-bg {
