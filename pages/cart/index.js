@@ -6,6 +6,10 @@ import NavBar from "../../components/navBar/NavBar";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { removeItem } from "../../redux/actionTypes";
 import { Box } from "@mui/system";
+import { auth, db } from "../../firebase/firebaseConfig";
+import { orderState } from "../../types/orderStates";
+import { addDoc, collection } from "firebase/firestore";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -51,6 +55,23 @@ const Cart = () => {
 
   const data = useSelector((state) => state.cart);
   const [cart, setCart] = React.useState([]);
+  const [user] = useAuthState(auth);
+
+  const createOrder = async () => {
+    const total = cart
+      .map((item) => parseFloat(item.Precio))
+      .reduce((a, b) => a + b, 0);
+
+    const docRef = await addDoc(collection(db, "orders"), {
+      order: cart,
+      date: new Date().toLocaleDateString(),
+      state: orderState.pending,
+      user: user?.uid,
+      total: total,
+    });
+
+    console.log("Ref: ", docRef.id);
+  };
 
   React.useEffect(() => {
     setCart(data);
@@ -63,7 +84,7 @@ const Cart = () => {
     <NavBar>
       <GpTable
         columns={columns}
-        data={cart}
+        data={cart.cart}
         title="Carrito"
         showTotal="true"
       ></GpTable>
@@ -79,7 +100,7 @@ const Cart = () => {
         {cart.length > 0 && (
           <GpButton
             text="Confirmar Pedido"
-            clickFunction={() => alert("Siguiente Sprint - Creando Pedidos")}
+            clickFunction={() => createOrder()}
           ></GpButton>
         )}
       </Box>

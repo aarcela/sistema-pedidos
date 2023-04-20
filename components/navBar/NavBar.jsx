@@ -3,9 +3,8 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
+import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import {
   Badge,
   CssBaseline,
@@ -19,48 +18,70 @@ import {
 
 import Image from "next/image";
 import { Home, Logout, ShoppingCart, ViewList } from "@mui/icons-material";
-
-import { signOut } from "firebase/auth";
 import { useRouter } from "next/router";
 import { auth, db } from "../../firebase/firebaseConfig";
-import { query, collection, getDocs, where } from "firebase/firestore";
-import { useAuthState } from "react-firebase-hooks/auth";
+// import { query, collection, getDocs, where } from "firebase/firestore";
 import GpButton from "../gp-button/GpButton";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { removeUser } from "../../redux/actionTypes";
+import { signOut } from "firebase/auth";
+import { roles } from "../../types/roles";
 
 export default function NavBar({ children }) {
-  const router = useRouter();
-
-  const [user] = useAuthState(auth);
+  
   const [open, setOpen] = React.useState(false);
-  const [name, setName] = React.useState("");
-  const [roles, setRoles] = React.useState([]);
+  const [user, setUser] = React.useState([])
+  const router = useRouter();
+  const dispatch = useDispatch();
   const data = useSelector((state) => state.cart);
+  const userData = useSelector((state) => state.user);
+  const [menu, setMenu] = React.useState([])
+
   const logOut = () => {
-    signOut(auth);
+    dispatch(removeUser())
+    signOut(auth)
     router.push("/login");
   };
 
   React.useEffect(() => {
-    fetchUserName(user);
-  }, [user]);
-
-  const fetchUserName = async (user) => {
-    try {
-      const q = await query(
-        collection(db, "users"),
-        where("uid", "==", user?.uid)
-      );
-      const doc = await getDocs(q);
-      const data = doc.docs[0].data();
-      setName(data.name);
-      setRoles(data.roles);
-    } catch (err) {
-      console.error(err);
-      setName("");
-      // alert("An error occured while fetching user data");
-    }
-  };
+    const menuAdmin = [
+      {
+        name: "Inicio",
+        link: "dashboard",
+      },
+      {
+        name: "Catálogo",
+        link: "dashboard",
+      },
+      {
+        name: "Pedidos",
+        link: "orders",
+      },
+      {
+        name: "Usuarios",
+        link: "users",
+      },
+    ];
+    const menuClient = [
+      {
+        name: "Inicio",
+        link: "dashboard",
+      },
+      {
+        name: "Catálogo",
+        link: "dashboard",
+      },
+      {
+        name: "Pedidos",
+        link: "orders",
+      },
+    ];
+    setUser(userData.user[0]);
+    console.log(user)
+    user?.roles === roles.admin
+      ? setMenu(menuAdmin)
+      : setMenu(menuClient);
+  },[userData, user]);
 
   const toggleDrawer = (open) => (event) => {
     if (
@@ -148,15 +169,18 @@ export default function NavBar({ children }) {
               Menu
             </Typography>
             <List>
-              {["Inicio", "Dashboard", "Pedidos"].map((text, index) => (
-                <ListItem key={text} disablePadding>
-                  <ListItemButton onClick={() => navigateTo(text)}>
+              {menu.map((element, index) => (
+                <ListItem key={index} disablePadding>
+                  <ListItemButton onClick={() => navigateTo(element.link)}>
                     <ListItemIcon>
                       {index === 0 && <Home sx={{ color: "white" }} />}
                       {index === 1 && <ViewList sx={{ color: "white" }} />}
                       {index === 2 && <ShoppingCart sx={{ color: "white" }} />}
+                      {index === 3 && (
+                        <AccountBoxIcon sx={{ color: "white" }} />
+                      )}
                     </ListItemIcon>
-                    <ListItemText primary={text} />
+                    <ListItemText primary={element.name} />
                   </ListItemButton>
                 </ListItem>
               ))}

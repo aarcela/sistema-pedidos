@@ -16,3 +16,20 @@ export const removeItem = (elementID) => {
     });
   };
 };
+export const addUser = (user) => {
+  return async (dispatch, getState) => {
+    return dispatch({
+      type: types.addUser,
+      payload: user,
+    });
+  };
+};
+
+export const removeUser = () => {
+  return async (dispatch, getState) => {
+    return dispatch({
+      type: types.removeItem,
+      payload: [],
+    });
+  };
+};

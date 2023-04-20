@@ -16,7 +16,7 @@ function CustomToolbar() {
   );
 }
 
-const GpTable = ({ columns, data, title, showTotal = false }) => {
+const GpTable = ({ columns, data, title, showTotal = false, clickFunction, height = "70vh" }) => {
   const [total, setTotal] = useState(0);
   return (
     <>
@@ -25,7 +25,6 @@ const GpTable = ({ columns, data, title, showTotal = false }) => {
           display: "flex",
           flexDirection: "column",
           padding: "3rem",
-          height: "95vh",
           width: "100%",
         }}
       >
@@ -39,7 +38,7 @@ const GpTable = ({ columns, data, title, showTotal = false }) => {
           {title}
         </Typography>
 
-        <div style={{ flexGrow: 1 }}>
+        <div style={{ flexGrow: 1, height:height,width: "100%" }}>
           {data && (
             <>
               <DataGrid
@@ -47,7 +46,13 @@ const GpTable = ({ columns, data, title, showTotal = false }) => {
                 columns={columns}
                 // pageSize={7}
                 // rowsPerPageOptions={[2]}
-                getRowId={(row) => row.CodArticulo}
+                getRowId={(row) => {
+                  if (title === "Pedidos") {
+                    return row.fact_num;
+                  }
+                  if (title === "Detalle Pedido") return row.codProducto;
+                  return row.CodArticulo;
+                }}
                 components={{ Toolbar: CustomToolbar }}
                 onStateChange={() => {
                   if (showTotal) {
@@ -55,14 +60,15 @@ const GpTable = ({ columns, data, title, showTotal = false }) => {
                       .map((item) => parseFloat(item.Precio))
                       .reduce((a, b) => a + b, 0);
                     showTotal && setTotal(total);
-                    console.log(total);
                   }
                 }}
                 getRowClassName={(params) =>
                   params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
                 }
+                onCellClick={(params) => clickFunction(params.row)}
                 sx={{
                   borderRadius: "0",
+                  maxHeight: "440",
                   ".primary-bg": {
                     backgroundColor: "#091a5d",
                     borderRadius: "0",
@@ -80,7 +86,7 @@ const GpTable = ({ columns, data, title, showTotal = false }) => {
                   },
                 }}
               />
-              <Pagination numOfLinks={6} page={data} total={100} />
+              {/* <Pagination numoflinks={6}  total={100} /> */}
             </>
           )}
         </div>
