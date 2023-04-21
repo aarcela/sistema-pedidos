@@ -44,6 +44,7 @@ export default function NavBar({ children }) {
   };
 
   React.useEffect(() => {
+    console.log(data);
     const menuAdmin = [
       {
         name: "Inicio",
@@ -112,13 +113,12 @@ export default function NavBar({ children }) {
             width: `calc(100% - 240px)`,
           }}
         >
-          <Toolbar>
+          <Toolbar sx={{justifyContent: 'end'}}>
             <IconButton
               size="large"
               edge="start"
               color="inherit"
               aria-label="menu"
-              sx={{ mr: 2 }}
               onClick={toggleDrawer(true)}
             >
               {/* <MenuIcon /> */}
@@ -126,7 +126,7 @@ export default function NavBar({ children }) {
             <GpButton
               clickFunction={() => navigateTo("cart")}
               icon={
-                <Badge badgeContent={data.length} color="secondary">
+                <Badge badgeContent={data.cart.length} color="secondary">
                   <ShoppingCart />
                 </Badge>
               }

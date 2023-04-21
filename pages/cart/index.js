@@ -87,6 +87,7 @@ const Cart = () => {
         data={cart.cart}
         title="Carrito"
         showTotal="true"
+        height="50vh"
       ></GpTable>
       <Box
         sx={{
