@@ -5,13 +5,15 @@ import GpButton from "../../components/gp-button/GpButton";
 import GpModal from "../../components/gp-modal/GpModal";
 import GpTable from "../../components/gp-table/GpTable";
 import NavBar from "../../components/navBar/NavBar";
-import { db } from "../../firebase/firebaseConfig";
-import { orderState } from "../../types/orderStates";
+import { useSelector } from "react-redux";
+import { roles } from "../../types/roles";
 
 const Orders = () => {
   const [modalData, setModalData] = React.useState({});
   const [isOpen, setIsOpen] = React.useState(false)
   const [orders, setOrders] = React.useState([]);
+  const userData = useSelector((state) => state.user);
+  const [ordersUrl, setOrdersUrl] = React.useState('')
   const columns = [
     {
       field: "fecha",
@@ -87,8 +89,15 @@ const Orders = () => {
         headers: headers,
       };
 
+      userData?.user[0]?.roles === roles.admin
+        ? setOrdersUrl(`pedidostotales`)
+        : setOrdersUrl(
+            `pedidosporcliente?codCliente=${userData?.user[0]?.co_cli}&status=0`
+          );
+        
+      if(!ordersUrl) return;
       const res = await fetch(
-        "http://intelinet.com.ve:8090/apigrupopuma/pedido/pedidostotales",
+        `http://intelinet.com.ve:8090/apigrupopuma/pedido/${ordersUrl}`,
         options
       );
       const data = await res.json();

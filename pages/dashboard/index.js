@@ -6,12 +6,23 @@ import GpButton from "../../components/gp-button/GpButton";
 import { types } from "../../types/types";
 import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "../../redux/actionTypes";
+import Loader from "../../components/loader/Loader";
+import { Box } from "@mui/material";
 
 const Dashboard = () => {
   const [inventory, setInventory] = React.useState([]);
-  // const [state, dispatch] = React.useReducer(cartReducer, { cart: [] });
+  const clickFunction = (value) => dispatch(addItem(value));
   const dispatch = useDispatch();
   const columns = [
+    {
+      field: "CodArticulo",
+      headerName: "Código",
+      headerClassName: "primary-bg",
+      sortable: false,
+      flex: 1,
+      // valueGetter: (params) =>
+      //   `${params.row.CodAlmacen || ""} ${params.row.CodArticulo || ""}`,
+    },
     {
       field: "Descripcion",
       headerName: "Descripcion",
@@ -65,7 +76,7 @@ const Dashboard = () => {
           <GpButton
             text="Añadir"
             clickFunction={
-              () => dispatch(addItem(cellValues.row))
+              () => clickFunction(cellValues.row)
               // dispatch({ type: types.addItem, payload: cellValues })
             }
           />
@@ -81,7 +92,7 @@ const Dashboard = () => {
       };
 
       const res = await fetch(
-        "https://62ffa2209350a1e548e34651.mockapi.io/apigrupopuma/inventario",
+        "http://intelinet.com.ve:8090/apigrupopuma/inventario",
         options
       );
       const data = await res.json();
@@ -97,12 +108,24 @@ const Dashboard = () => {
   return (
     <>
       <NavBar>
-        {inventory.length !== 0 && (
+        {inventory.length !== 0 ? (
           <GpTable
             columns={columns}
             data={inventory}
             title="Listado de Productos"
+            clickFunction={clickFunction}
           ></GpTable>
+        ) : (
+          <Box
+            sx={{
+              display: "flex",
+              width: "100%",
+              alignContent: "center",
+              justifyContent: "center"
+            }}
+          >
+            <Loader />
+          </Box>
         )}
       </NavBar>
     </>

@@ -40,7 +40,6 @@ const Admin = () => {
   const handleLogin = () => {
     setIsError("");
     if (email && password) {
-      console.log(email)
       setIsLoading(true);
       try{
         signInWithEmailAndPassword(email, password)
@@ -60,7 +59,6 @@ const Admin = () => {
   };
 
   const fetchUserData = async (user) => {
-    console.log(user)
     try {
       const q = await query(
         collection(db, "users"),
@@ -71,7 +69,6 @@ const Admin = () => {
       data.roles = roles.admin
       dispatch(addUser(data))
       router.push("/dashboard");
-      console.log('User Data', data)
     } catch (err) {
       setIsError("Error intentando ingresar");
     }

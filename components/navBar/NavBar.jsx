@@ -44,7 +44,6 @@ export default function NavBar({ children }) {
   };
 
   React.useEffect(() => {
-    console.log(data);
     const menuAdmin = [
       {
         name: "Inicio",
@@ -78,7 +77,6 @@ export default function NavBar({ children }) {
       },
     ];
     setUser(userData.user[0]);
-    console.log(user)
     user?.roles === roles.admin
       ? setMenu(menuAdmin)
       : setMenu(menuClient);

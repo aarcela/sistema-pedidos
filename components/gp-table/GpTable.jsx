@@ -4,14 +4,16 @@ import {
   GridToolbarContainer,
   GridToolbarDensitySelector,
   GridToolbarFilterButton,
+  GridToolbarQuickFilter,
 } from "@mui/x-data-grid";
 import { Box, Pagination, Typography } from "@mui/material";
+
 
 function CustomToolbar() {
   return (
     <GridToolbarContainer>
-      <GridToolbarFilterButton />
-      <GridToolbarDensitySelector />
+      {/* <GridToolbarFilterButton /> */}
+      <GridToolbarQuickFilter />
     </GridToolbarContainer>
   );
 }
@@ -38,7 +40,7 @@ const GpTable = ({ columns, data, title, showTotal = false, clickFunction, heigh
           {title}
         </Typography>
 
-        <div style={{ flexGrow: 1, height:height,width: "100%" }}>
+        <div style={{ flexGrow: 1, height: height, width: "100%" }}>
           {data && (
             <>
               <DataGrid
@@ -54,6 +56,12 @@ const GpTable = ({ columns, data, title, showTotal = false, clickFunction, heigh
                   return row.CodArticulo;
                 }}
                 components={{ Toolbar: CustomToolbar }}
+                componentsProps={{
+                  toolbar: {
+                    showQuickFilter: true,
+                    quickFilterProps: { debounceMs: 500 },
+                  },
+                }}
                 onStateChange={() => {
                   if (showTotal) {
                     const total = data
