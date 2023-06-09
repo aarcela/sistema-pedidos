@@ -68,7 +68,7 @@ const Admin = () => {
       const data = doc.docs[0].data();
       data.roles = roles.admin
       dispatch(addUser(data))
-      router.push("/dashboard");
+      router.push("/orders");
     } catch (err) {
       setIsError("Error intentando ingresar");
     }

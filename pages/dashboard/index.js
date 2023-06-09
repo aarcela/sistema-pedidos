@@ -2,17 +2,29 @@ import React from "react";
 import NavBar from "../../components/navBar/NavBar";
 import GpTable from "../../components/gp-table/GpTable";
 import GpButton from "../../components/gp-button/GpButton";
-// import { cartReducer } from "../../redux/reducer/cartReducer";
-import { types } from "../../types/types";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addItem } from "../../redux/actionTypes";
 import Loader from "../../components/loader/Loader";
-import { Box } from "@mui/material";
+import { Box, TextField } from "@mui/material";
+import GpToast from "../../components/gp-toast/GpToast";
 
 const Dashboard = () => {
   const [inventory, setInventory] = React.useState([]);
-  const clickFunction = (value) => dispatch(addItem(value));
   const dispatch = useDispatch();
+  const [message, setMessage] = React.useState("");
+  const clickFunction = (value) => {
+    if (
+      parseInt(value.quantity, 10) <= 0 ||
+      parseInt(value.quantity, 10)  > value.Disponible
+    ) {
+      setMessage("Cantidad no encontrada");
+      setTimeout(() => setMessage(""), 3000);
+    } else {
+      dispatch(addItem(value));
+      setMessage("Producto añadido");
+      setTimeout(() => setMessage(""), 3000);
+    }
+  };
   const columns = [
     {
       field: "CodArticulo",
@@ -50,6 +62,27 @@ const Dashboard = () => {
       // width: 70,
     },
     {
+      field: "quantity",
+      headerName: "Cantidad",
+      sortable: false,
+      flex: 0.5,
+      headerClassName: "primary-bg",
+      renderCell: (cellValues) => {
+        return (
+          <TextField
+            InputProps={{inputProps: {min:0, max:cellValues.row.Disponible}}}
+            id="quantity"
+            type="number"
+            onChange={(e, value) => {
+                cellValues.row.quantity = e.target.value
+              }}
+
+          />
+        );
+      },
+      // width: 70,
+    },
+    {
       field: "Disponible",
       sortable: false,
       headerName: "Disponibilidad",
@@ -75,8 +108,8 @@ const Dashboard = () => {
         return (
           <GpButton
             text="Añadir"
-            clickFunction={
-              () => clickFunction(cellValues.row)
+            disabled={cellValues.row.Disponible > 0 ? false : true}
+            clickFunction={() =>  clickFunction(cellValues.row)
               // dispatch({ type: types.addItem, payload: cellValues })
             }
           />
@@ -98,6 +131,7 @@ const Dashboard = () => {
       const data = await res.json();
       data.map((row) => {
         row.add = "Añadir";
+        row.quantity = 1
       });
       setInventory(data);
     };
@@ -121,13 +155,14 @@ const Dashboard = () => {
               display: "flex",
               width: "100%",
               alignContent: "center",
-              justifyContent: "center"
+              justifyContent: "center",
             }}
           >
             <Loader />
           </Box>
         )}
       </NavBar>
+      {message && <GpToast message={message} />}
     </>
   );
 };

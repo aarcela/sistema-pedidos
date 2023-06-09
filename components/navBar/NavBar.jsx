@@ -46,14 +46,6 @@ export default function NavBar({ children }) {
   React.useEffect(() => {
     const menuAdmin = [
       {
-        name: "Inicio",
-        link: "dashboard",
-      },
-      {
-        name: "Catálogo",
-        link: "dashboard",
-      },
-      {
         name: "Pedidos",
         link: "orders",
       },
@@ -111,26 +103,33 @@ export default function NavBar({ children }) {
             width: `calc(100% - 240px)`,
           }}
         >
-          <Toolbar sx={{justifyContent: 'end'}}>
-            <IconButton
-              size="large"
-              edge="start"
-              color="inherit"
-              aria-label="menu"
-              onClick={toggleDrawer(true)}
-            >
-              {/* <MenuIcon /> */}
-            </IconButton>
-            <GpButton
-              clickFunction={() => navigateTo("cart")}
-              icon={
-                <Badge badgeContent={data.cart.length} color="secondary">
-                  <ShoppingCart />
-                </Badge>
-              }
-              text={"Carrito"}
-            ></GpButton>
-          </Toolbar>
+          {
+          user?.roles !== roles.admin && (
+            <Toolbar sx={{ justifyContent: "end" }}>
+              <IconButton
+                size="large"
+                edge="start"
+                color="inherit"
+                aria-label="menu"
+                onClick={toggleDrawer(true)}
+              >
+                {/* <MenuIcon /> */}
+              </IconButton>
+              <GpButton
+                clickFunction={() => navigateTo("cart")}
+                icon={
+                  <Badge
+                    sx={{ padding: "0.3rem" }}
+                    badgeContent={data.cart.length}
+                    color="secondary"
+                  >
+                    <ShoppingCart />
+                  </Badge>
+                }
+                text={"Carrito"}
+              ></GpButton>
+            </Toolbar>
+          )}
         </AppBar>
         <Drawer
           anchor="left"

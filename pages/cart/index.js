@@ -9,14 +9,25 @@ import { Box } from "@mui/system";
 import axios from "axios";
 import GpToast from "../../components/gp-toast/GpToast";
 import Loader from "../../components/loader/Loader";
+import { useRouter } from "next/router";
 
 const Cart = () => {
   const dispatch = useDispatch();
   const clickFunction = (value) => dispatch(removeItem(value));
+  const router = useRouter();
   const columns = [
     {
       field: "Descripcion",
       headerName: "Descripcion",
+      headerClassName: "primary-bg",
+      sortable: false,
+      flex: 1,
+      // valueGetter: (params) =>
+      //   `${params.row.CodAlmacen || ""} ${params.row.CodArticulo || ""}`,
+    },
+    {
+      field: "quantity",
+      headerName: "Cantidad",
       headerClassName: "primary-bg",
       sortable: false,
       flex: 1,
@@ -30,6 +41,20 @@ const Cart = () => {
       sortable: false,
       flex: 0.5,
       headerClassName: "primary-bg",
+      // width: 70,
+    },
+    {
+      field: "Subtotal",
+      description: "Subtotal",
+      headerName: "Subtotal",
+      sortable: false,
+      flex: 0.5,
+      headerClassName: "primary-bg",
+      renderCell:(cellValues)=> {
+        return (
+          cellValues.row.Precio * cellValues.row.quantity
+        )
+      }
       // width: 70,
     },
     {
@@ -71,14 +96,14 @@ const Cart = () => {
     };
 
     const subTotal = cart?.cart
-      ?.map((item) => parseFloat(item.Precio))
+      ?.map((item) => parseFloat(item.subTotal))
       .reduce((a, b) => a + b, 0);
 
     const cartPedido = cart?.cart?.map((element) => {
       return {
         CodProducto: element.CodArticulo,
         Precio: element.Precio,
-        Cantidad: 1,
+        Cantidad: element.quantity,
       };
     });
 
@@ -102,6 +127,7 @@ const Cart = () => {
       )
       .then(function (response) {
         setResponseMessage("Pedido creado");
+        router.push("/dashboard");
       })
       .catch(function (error) {
         setResponseMessage("Error creando pedido");

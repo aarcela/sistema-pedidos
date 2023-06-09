@@ -8,9 +8,11 @@ const GpButton = ({
   textColor = "white",
   bgColor = "#091A5D",
   clickFunction,
+  disabled = false
 }) => {
   return (
     <Button
+      disabled={disabled}
       startIcon={icon}
       sx={{
         backgroundColor: bgColor,

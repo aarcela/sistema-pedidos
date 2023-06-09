@@ -62,6 +62,7 @@ const GpTable = ({ columns, data, title, showTotal = false, clickFunction, heigh
                     quickFilterProps: { debounceMs: 500 },
                   },
                 }}
+                localeText={{toolbarQuickFilterPlaceholder: 'Buscador ...'}}
                 onStateChange={() => {
                   if (showTotal) {
                     const total = data
@@ -73,7 +74,7 @@ const GpTable = ({ columns, data, title, showTotal = false, clickFunction, heigh
                 getRowClassName={(params) =>
                   params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
                 }
-                onCellClick={(params) => clickFunction(params.row)}
+                // onCellClick={(params) => clickFunction(params.row)}
                 sx={{
                   borderRadius: "0",
                   maxHeight: "440",
@@ -91,6 +92,12 @@ const GpTable = ({ columns, data, title, showTotal = false, clickFunction, heigh
                   },
                   ".add-button": {
                     color: "red",
+                  },
+                  ".MuiSvgIcon-root .MuiDataGrid-filterIcon": {
+                    color: "#091a5d",
+                  },
+                  ".MuiDataGrid-toolbarContainer": {
+                    marginBottom: "2rem",
                   },
                 }}
               />
