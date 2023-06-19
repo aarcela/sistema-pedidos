@@ -7,13 +7,14 @@ import GpTable from "../../components/gp-table/GpTable";
 import NavBar from "../../components/navBar/NavBar";
 import { useSelector } from "react-redux";
 import { roles } from "../../types/roles";
+import GpToast from "../../components/gp-toast/GpToast";
 
 const Orders = () => {
   const [modalData, setModalData] = React.useState({});
   const [isOpen, setIsOpen] = React.useState(false)
   const [orders, setOrders] = React.useState([]);
+  const [message, setMessage] = React.useState('')
   const userData = useSelector((state) => state.user);
-  const [ordersUrl, setOrdersUrl] = React.useState('')
   const columns = [
     {
       field: "fecha",
@@ -82,6 +83,7 @@ const Orders = () => {
   React.useEffect(() => {
 
     const fetchOrders = async () => {
+      const ordersUrl = '';
       const headers = {};
       const options = {
         method: "GET",
@@ -89,17 +91,33 @@ const Orders = () => {
         headers: headers,
       };
 
+      if (!userData?.user[0]?.roles) {
+        setMessage("Ha ocurrido un error, por favor ingrese nuevamente");
+        setTimeout(() => {
+          setMessage("");
+        }, 3000);
+        return;
+      }
       userData?.user[0]?.roles === roles.admin
-        ? setOrdersUrl(`pedidostotales`)
-        : setOrdersUrl(
-            `pedidosporcliente?codCliente=${userData?.user[0]?.co_cli}&status=0`
-          );
-        
+        ? (ordersUrl = "pedidototales")
+        : (ordersUrl = `pedidosporcliente?codCliente=${userData?.user[0]?.co_cli}&status=0`);
+        // ? setOrdersUrl(`pedidostotales`)
+        // : setOrdersUrl(
+        //     `pedidosporcliente?codCliente=${userData?.user[0]?.co_cli}&status=0`
+        //   );
+      console.log(ordersUrl)
       if(!ordersUrl) return;
       const res = await fetch(
         `http://intelinet.com.ve:8090/apigrupopuma/pedido/${ordersUrl}`,
+        // `http://intelinet.com.ve:8090/apigrupopuma/pedido/pedidosporcliente?codCliente=200042362 &status=0`,
         options
       );
+      if (!data) {
+        setMessage("Ha ocurrido un error, por favor ingrese nuevamente");
+        setTimeout(() => {
+          setMessage("");
+        }, 3000);
+      }
       const data = await res.json();
       setOrders(data)
     };
@@ -120,6 +138,7 @@ const Orders = () => {
         )}
       </NavBar>
       {isOpen && <GpModal isOpen={isOpen} modalData={modalData}/>}
+      {message !== '' && <GpToast message={message}/>}
     </>
   );
 };

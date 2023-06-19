@@ -1,19 +1,26 @@
 import React, { useState } from "react";
 import {
   DataGrid,
+  GridColumnHeaderFilterIconButton,
+  GridFilterPanel,
+  GridLinkOperator,
   GridToolbarContainer,
   GridToolbarDensitySelector,
   GridToolbarFilterButton,
   GridToolbarQuickFilter,
+  esES
 } from "@mui/x-data-grid";
-import { Box, Pagination, Typography } from "@mui/material";
+import { Box, Pagination, Typography, colors } from "@mui/material";
 
 
 function CustomToolbar() {
   return (
-    <GridToolbarContainer>
-      {/* <GridToolbarFilterButton /> */}
-      <GridToolbarQuickFilter />
+    <GridToolbarContainer
+      sx={{ display: "flex", flexDirection: "column", alignItems: "start" }}
+    >
+      <GridToolbarFilterButton />
+      <GridFilterPanel />
+      <GridToolbarQuickFilter sx={{alignSelf:'end'}}/>
     </GridToolbarContainer>
   );
 }
@@ -44,6 +51,7 @@ const GpTable = ({ columns, data, title, showTotal = false, clickFunction, heigh
           {data && (
             <>
               <DataGrid
+                localeText={esES.components.MuiDataGrid.defaultProps.localeText}
                 rows={data}
                 columns={columns}
                 // pageSize={7}
@@ -62,7 +70,6 @@ const GpTable = ({ columns, data, title, showTotal = false, clickFunction, heigh
                     quickFilterProps: { debounceMs: 500 },
                   },
                 }}
-                localeText={{toolbarQuickFilterPlaceholder: 'Buscador ...'}}
                 onStateChange={() => {
                   if (showTotal) {
                     const total = data
@@ -74,6 +81,9 @@ const GpTable = ({ columns, data, title, showTotal = false, clickFunction, heigh
                 getRowClassName={(params) =>
                   params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
                 }
+                // filterModel={{
+                //   items: [{operator: '>'}]
+                // }}
                 // onCellClick={(params) => clickFunction(params.row)}
                 sx={{
                   borderRadius: "0",
@@ -93,12 +103,16 @@ const GpTable = ({ columns, data, title, showTotal = false, clickFunction, heigh
                   ".add-button": {
                     color: "red",
                   },
-                  ".MuiSvgIcon-root .MuiDataGrid-filterIcon": {
+                  ".MuiDataGrid-filterIcon": {
                     color: "#091a5d",
                   },
                   ".MuiDataGrid-toolbarContainer": {
                     marginBottom: "2rem",
                   },
+                  ".MuiIconButton-root ":
+                    {
+                      color: "white",
+                    },
                 }}
               />
               {/* <Pagination numoflinks={6}  total={100} /> */}

@@ -31,7 +31,7 @@ const Dashboard = () => {
       headerName: "Código",
       headerClassName: "primary-bg",
       sortable: false,
-      flex: 1,
+      flex: 0.7,
       // valueGetter: (params) =>
       //   `${params.row.CodAlmacen || ""} ${params.row.CodArticulo || ""}`,
     },
@@ -45,9 +45,17 @@ const Dashboard = () => {
       //   `${params.row.CodAlmacen || ""} ${params.row.CodArticulo || ""}`,
     },
     {
-      field: "Categoria",
+      field: "Linea",
       description: "Categoría del artículo",
       headerName: "Categoría",
+      sortable: false,
+      flex: 1,
+      headerClassName: "primary-bg",
+    },
+    {
+      field: "SubLinea",
+      description: "Sub categoría del artículo",
+      headerName: "Marca",
       sortable: false,
       flex: 1,
       headerClassName: "primary-bg",
@@ -70,9 +78,10 @@ const Dashboard = () => {
       renderCell: (cellValues) => {
         return (
           <TextField
-            InputProps={{inputProps: {min:0, max:cellValues.row.Disponible}}}
+            InputProps={{inputProps: {min:1, max:cellValues.row.Disponible}}}
             id="quantity"
             type="number"
+            placeholder="1"
             onChange={(e, value) => {
                 cellValues.row.quantity = e.target.value
               }}
@@ -102,7 +111,7 @@ const Dashboard = () => {
       field: "add",
       sortable: false,
       headerName: "Acciones",
-      // flex: 1,
+      flex: 0.5,
       headerClassName: "primary-bg",
       renderCell: (cellValues) => {
         return (

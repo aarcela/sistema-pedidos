@@ -127,7 +127,7 @@ const Cart = () => {
       )
       .then(function (response) {
         setResponseMessage("Pedido creado");
-        router.push("/dashboard");
+        // router.push("/dashboard");
       })
       .catch(function (error) {
         setResponseMessage("Error creando pedido");
