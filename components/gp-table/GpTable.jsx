@@ -1,12 +1,9 @@
 import React, { useState } from "react";
 import {
   DataGrid,
-  GridColumnHeaderFilterIconButton,
   GridFilterPanel,
-  GridLinkOperator,
+  GridToolbar,
   GridToolbarContainer,
-  GridToolbarDensitySelector,
-  GridToolbarFilterButton,
   GridToolbarQuickFilter,
   esES
 } from "@mui/x-data-grid";
@@ -18,7 +15,6 @@ function CustomToolbar() {
     <GridToolbarContainer
       sx={{ display: "flex", flexDirection: "column", alignItems: "start" }}
     >
-      <GridToolbarFilterButton />
       <GridFilterPanel />
       <GridToolbarQuickFilter sx={{alignSelf:'end'}}/>
     </GridToolbarContainer>
@@ -81,9 +77,6 @@ const GpTable = ({ columns, data, title, showTotal = false, clickFunction, heigh
                 getRowClassName={(params) =>
                   params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
                 }
-                // filterModel={{
-                //   items: [{operator: '>'}]
-                // }}
                 // onCellClick={(params) => clickFunction(params.row)}
                 sx={{
                   borderRadius: "0",

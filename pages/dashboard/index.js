@@ -32,17 +32,6 @@ const Dashboard = () => {
       headerClassName: "primary-bg",
       sortable: false,
       flex: 0.7,
-      // valueGetter: (params) =>
-      //   `${params.row.CodAlmacen || ""} ${params.row.CodArticulo || ""}`,
-    },
-    {
-      field: "Descripcion",
-      headerName: "Descripcion",
-      headerClassName: "primary-bg",
-      sortable: false,
-      flex: 1,
-      // valueGetter: (params) =>
-      //   `${params.row.CodAlmacen || ""} ${params.row.CodArticulo || ""}`,
     },
     {
       field: "Linea",
@@ -51,14 +40,39 @@ const Dashboard = () => {
       sortable: false,
       flex: 1,
       headerClassName: "primary-bg",
+      type: "singleSelect",
+      valueOptions: [
+        ...new Set(
+          inventory
+            .map((o) => o.Linea)
+            .flat()
+            .sort()
+        ),
+      ],
+    },
+    {
+      field: "Descripcion",
+      headerName: "Descripcion",
+      headerClassName: "primary-bg",
+      sortable: false,
+      flex: 1,
     },
     {
       field: "SubLinea",
       description: "Sub categoría del artículo",
       headerName: "Marca",
       sortable: false,
+      type: "singleSelect",
       flex: 1,
       headerClassName: "primary-bg",
+      valueOptions: [
+        ...new Set(
+          inventory
+            .map((o) => o.SubLinea)
+            .flat()
+            .sort()
+        ),
+      ],
     },
     {
       field: "Precio",
@@ -67,7 +81,6 @@ const Dashboard = () => {
       sortable: false,
       flex: 0.5,
       headerClassName: "primary-bg",
-      // width: 70,
     },
     {
       field: "quantity",
@@ -75,21 +88,22 @@ const Dashboard = () => {
       sortable: false,
       flex: 0.5,
       headerClassName: "primary-bg",
+      filterable: false,
       renderCell: (cellValues) => {
         return (
           <TextField
-            InputProps={{inputProps: {min:1, max:cellValues.row.Disponible}}}
+            InputProps={{
+              inputProps: { min: 1, max: cellValues.row.Disponible },
+            }}
             id="quantity"
             type="number"
             placeholder="1"
             onChange={(e, value) => {
-                cellValues.row.quantity = e.target.value
-              }}
-
+              cellValues.row.quantity = e.target.value;
+            }}
           />
         );
       },
-      // width: 70,
     },
     {
       field: "Disponible",
@@ -97,8 +111,8 @@ const Dashboard = () => {
       headerName: "Disponibilidad",
       flex: 0.5,
       type: "number",
+      filterable: false,
       headerClassName: "primary-bg",
-      // width: 70,
       renderCell: (cellValues) => {
         return cellValues.row.Disponible > 0 ? (
           <GpButton text="Sí" bgColor="#48D98A" />
@@ -113,13 +127,14 @@ const Dashboard = () => {
       headerName: "Acciones",
       flex: 0.5,
       headerClassName: "primary-bg",
+      filterable: false,
       renderCell: (cellValues) => {
         return (
           <GpButton
             text="Añadir"
             disabled={cellValues.row.Disponible > 0 ? false : true}
-            clickFunction={() =>  clickFunction(cellValues.row)
-              // dispatch({ type: types.addItem, payload: cellValues })
+            clickFunction={
+              () => clickFunction(cellValues.row)
             }
           />
         );
@@ -153,7 +168,9 @@ const Dashboard = () => {
       <NavBar>
         {inventory.length !== 0 ? (
           <GpTable
-            columns={columns}
+            columns={[
+              ...columns,
+            ]}
             data={inventory}
             title="Listado de Productos"
             clickFunction={clickFunction}
