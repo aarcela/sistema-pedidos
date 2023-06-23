@@ -102,10 +102,6 @@ const GpTable = ({ columns, data, title, showTotal = false, clickFunction, heigh
                   ".MuiDataGrid-toolbarContainer": {
                     marginBottom: "2rem",
                   },
-                  ".MuiIconButton-root ":
-                    {
-                      color: "white",
-                    },
                 }}
               />
               {/* <Pagination numoflinks={6}  total={100} /> */}
