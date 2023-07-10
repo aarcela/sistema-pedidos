@@ -5,7 +5,7 @@ import GpButton from "../../components/gp-button/GpButton";
 import { useDispatch } from "react-redux";
 import { addItem } from "../../redux/actionTypes";
 import Loader from "../../components/loader/Loader";
-import { Box, TextField } from "@mui/material";
+import { Box, TextField, Tooltip } from "@mui/material";
 import GpToast from "../../components/gp-toast/GpToast";
 
 const Dashboard = () => {
@@ -41,6 +41,19 @@ const Dashboard = () => {
       flex: 1,
       headerClassName: "primary-bg",
       type: "singleSelect",
+      renderCell: (params) => (
+        <Tooltip title={params.row.Linea}>
+          <span
+            style={{
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+            }}
+          >
+            {params.row.Linea}
+          </span>
+        </Tooltip>
+      ),
       valueOptions: [
         ...new Set(
           inventory
@@ -56,6 +69,19 @@ const Dashboard = () => {
       headerClassName: "primary-bg",
       sortable: false,
       flex: 1,
+      renderCell: (params) => (
+        <Tooltip title={params.row.Descripcion}>
+          <span
+            style={{
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+            }}
+          >
+            {params.row.Descripcion}
+          </span>
+        </Tooltip>
+      ),
     },
     {
       field: "SubLinea",
@@ -73,6 +99,19 @@ const Dashboard = () => {
             .sort()
         ),
       ],
+      renderCell: (params) => (
+        <Tooltip title={params.row.SubLinea}>
+          <span
+            style={{
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+            }}
+          >
+            {params.row.SubLinea}
+          </span>
+        </Tooltip>
+      ),
     },
     {
       field: "Precio",
@@ -133,9 +172,7 @@ const Dashboard = () => {
           <GpButton
             text="Añadir"
             disabled={cellValues.row.Disponible > 0 ? false : true}
-            clickFunction={
-              () => clickFunction(cellValues.row)
-            }
+            clickFunction={() => clickFunction(cellValues.row)}
           />
         );
       },
