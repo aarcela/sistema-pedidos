@@ -10,6 +10,7 @@ import axios from "axios";
 import GpToast from "../../components/gp-toast/GpToast";
 import Loader from "../../components/loader/Loader";
 import { useRouter } from "next/router";
+import { Tooltip } from "@mui/material";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -24,6 +25,19 @@ const Cart = () => {
       flex: 1,
       // valueGetter: (params) =>
       //   `${params.row.CodAlmacen || ""} ${params.row.CodArticulo || ""}`,
+      renderCell: (params) => (
+        <Tooltip title={params.row.Descripcion}>
+          <span
+            style={{
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+              overflow: "hidden",
+            }}
+          >
+            {params.row.Descripcion}
+          </span>
+        </Tooltip>
+      ),
     },
     {
       field: "quantity",
@@ -50,11 +64,9 @@ const Cart = () => {
       sortable: false,
       flex: 0.5,
       headerClassName: "primary-bg",
-      renderCell:(cellValues)=> {
-        return (
-          cellValues.row.Precio * cellValues.row.quantity
-        )
-      }
+      renderCell: (cellValues) => {
+        return cellValues.row.Precio * cellValues.row.quantity;
+      },
       // width: 70,
     },
     {

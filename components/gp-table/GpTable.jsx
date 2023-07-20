@@ -2,12 +2,11 @@ import React, { useState } from "react";
 import {
   DataGrid,
   GridFilterPanel,
-  GridToolbar,
   GridToolbarContainer,
   GridToolbarQuickFilter,
   esES
 } from "@mui/x-data-grid";
-import { Box, Pagination, Typography, colors } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 
 function CustomToolbar() {
@@ -77,7 +76,6 @@ const GpTable = ({ columns, data, title, showTotal = false, clickFunction, heigh
                 getRowClassName={(params) =>
                   params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
                 }
-                // onCellClick={(params) => clickFunction(params.row)}
                 sx={{
                   borderRadius: "0",
                   maxHeight: "440",
@@ -104,7 +102,6 @@ const GpTable = ({ columns, data, title, showTotal = false, clickFunction, heigh
                   },
                 }}
               />
-              {/* <Pagination numoflinks={6}  total={100} /> */}
             </>
           )}
         </div>
