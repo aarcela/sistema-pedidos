@@ -53,16 +53,16 @@ const GpTable = ({ columns, data, title, showTotal = false, clickFunction, heigh
                 // rowsPerPageOptions={[2]}
                 getRowId={(row) => {
                   if (title === "Pedidos") {
-                    return row.fact_num;
+                    return row.fact_num + Math.random();
                   }
-                  if (title === "Detalle Pedido") return row.codProducto;
-                  return row.CodArticulo;
+                  if (title === "Detalle Pedido") return row.codProducto + Math.random();
+                  return row.CodArticulo + Math.random();
                 }}
                 components={{ Toolbar: CustomToolbar }}
                 componentsProps={{
                   toolbar: {
                     showQuickFilter: true,
-                    quickFilterProps: { debounceMs: 500 },
+                    // quickFilterProps: { debounceMs: 500 },
                   },
                 }}
                 onStateChange={() => {
