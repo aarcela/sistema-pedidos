@@ -186,7 +186,7 @@ const Dashboard = () => {
       };
 
       const res = await fetch(
-        "http://intelinet.com.ve:8090/apigrupopuma/inventario",
+        "http://intelinet.com.ve:8090/apigrupopuma/inventario/articulosconstock",
         options
       );
       const data = await res.json();
