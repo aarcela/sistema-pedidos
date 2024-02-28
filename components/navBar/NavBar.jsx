@@ -28,18 +28,17 @@ import { signOut } from "firebase/auth";
 import { roles } from "../../types/roles";
 
 export default function NavBar({ children }) {
-  
   const [open, setOpen] = React.useState(false);
-  const [user, setUser] = React.useState([])
+  const [user, setUser] = React.useState([]);
   const router = useRouter();
   const dispatch = useDispatch();
   const data = useSelector((state) => state.cart);
   const userData = useSelector((state) => state.user);
-  const [menu, setMenu] = React.useState([])
+  const [menu, setMenu] = React.useState([]);
 
   const logOut = () => {
-    dispatch(removeUser())
-    signOut(auth)
+    dispatch(removeUser());
+    signOut(auth);
     router.push("/login");
   };
 
@@ -69,10 +68,8 @@ export default function NavBar({ children }) {
       },
     ];
     setUser(userData.user[0]);
-    user?.roles === roles.admin
-      ? setMenu(menuAdmin)
-      : setMenu(menuClient);
-  },[userData, user]);
+    user?.roles === roles.admin ? setMenu(menuAdmin) : setMenu(menuClient);
+  }, [userData, user]);
 
   const toggleDrawer = (open) => (event) => {
     if (
@@ -100,11 +97,10 @@ export default function NavBar({ children }) {
             flexGrow: 1,
             backgroundColor: "#E7E7E7",
             color: "#091A5D",
-            width: `calc(100% - 240px)`,
+            width: `calc(100% - 250px)`,
           }}
         >
-          {
-          user?.roles !== roles.admin && (
+          {user?.roles !== roles.admin && (
             <Toolbar sx={{ justifyContent: "end" }}>
               <IconButton
                 size="large"
@@ -152,6 +148,7 @@ export default function NavBar({ children }) {
               paddingTop: "1rem",
               textAlign: "center",
               width: 250,
+              padding: "1rem",
             }}
             role="presentation"
           >
@@ -159,7 +156,7 @@ export default function NavBar({ children }) {
               sx={{ marginBottom: "1rem", marginTop: "1rem" }}
               src="/images/logo.png"
               alt="logo"
-              width="197"
+              width="250"
               height="81"
             />
             <Typography variant="h6" fontWeight="lighter">

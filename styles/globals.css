@@ -49,3 +49,15 @@ th {
   background-color: #091a5d;
   color: white;
 }
+
+.primary-color {
+  color: #091a5d;
+}
+
+.primary-bg {
+  background-color: #091a5d;
+}
+
+.secondary-bg {
+  background-color: #e7e7e7;
+}

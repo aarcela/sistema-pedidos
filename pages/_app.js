@@ -1,4 +1,4 @@
-import { createTheme, ThemeProvider, styled } from "@mui/material/styles";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Provider } from "react-redux";
 import { store } from "../redux/store";
 import "../styles/globals.css";

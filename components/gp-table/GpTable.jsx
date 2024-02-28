@@ -4,23 +4,18 @@ import {
   GridFilterPanel,
   GridToolbarContainer,
   GridToolbarQuickFilter,
-  esES
+  esES,
 } from "@mui/x-data-grid";
 import { Box, Typography } from "@mui/material";
 
-
-function CustomToolbar() {
-  return (
-    <GridToolbarContainer
-      sx={{ display: "flex", flexDirection: "column", alignItems: "start" }}
-    >
-      <GridFilterPanel />
-      <GridToolbarQuickFilter sx={{alignSelf:'end'}}/>
-    </GridToolbarContainer>
-  );
-}
-
-const GpTable = ({ columns, data, title, showTotal = false, clickFunction, height = "70vh" }) => {
+const GpTable = ({
+  columns,
+  data,
+  title,
+  showTotal = false,
+  clickFunction,
+  height = "70vh",
+}) => {
   const [total, setTotal] = useState(0);
   return (
     <>
@@ -49,20 +44,17 @@ const GpTable = ({ columns, data, title, showTotal = false, clickFunction, heigh
                 localeText={esES.components.MuiDataGrid.defaultProps.localeText}
                 rows={data}
                 columns={columns}
-                // pageSize={7}
-                // rowsPerPageOptions={[2]}
                 getRowId={(row) => {
                   if (title === "Pedidos") {
                     return row.fact_num + Math.random();
                   }
-                  if (title === "Detalle Pedido") return row.codProducto + Math.random();
+                  if (title === "Detalle Pedido")
+                    return row.codProducto + Math.random();
                   return row.CodArticulo + Math.random();
                 }}
-                components={{ Toolbar: CustomToolbar }}
                 componentsProps={{
                   toolbar: {
                     showQuickFilter: true,
-                    // quickFilterProps: { debounceMs: 500 },
                   },
                 }}
                 onStateChange={() => {
