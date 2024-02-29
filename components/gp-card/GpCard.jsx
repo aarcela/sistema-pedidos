@@ -21,6 +21,7 @@ const GpCard = ({ data, clickFunction }) => {
           className="secondary-bg"
           sx={{
             width: "95%",
+            height: "auto",
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
@@ -86,7 +87,7 @@ const GpCard = ({ data, clickFunction }) => {
               justifyContent: "space-between",
             }}
           >
-            {data.Disponible > 0 ? (
+            {(data.Disponible > 0) & (data.Precio > 0) ? (
               <GpButton text="Disponible" bgColor="#48D98A" />
             ) : (
               <GpButton text="No Disponible" bgColor="#EC2139" />

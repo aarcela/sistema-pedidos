@@ -1,19 +1,11 @@
 import React from "react";
-import {
-  Box,
-  FormControl,
-  Input,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-} from "@mui/material";
+import { Box, FormControl, Input, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { useState } from "react";
-export const GpCategoryFilter = ({ handleSubcategoryChange, handleSearch }) => {
+export const GpCategoryFilter = ({ handleCategoryChange, handleSubcategoryChange, handleSearch }) => {
   const mockData = [
     {
       id: 1,
-      linea: "LUBRICANTES IMPORTADOS",
+      linea: "LUBRICANTES IMPORTADO",
       sublinea: ["ROSHFRANS", "UNO"],
     },
     {
@@ -23,15 +15,8 @@ export const GpCategoryFilter = ({ handleSubcategoryChange, handleSearch }) => {
     },
     {
       id: 3,
-      linea: "Filtros",
-      sublinea: [
-        "AIRE",
-        "GASOLINA",
-        "ACEITE",
-        "ACEITE INDUSTRIAL",
-        "COMBUSTIBLE INDUSTRIAL",
-        "AIRE INDUSTRIAL",
-      ],
+      linea: "FILTROS",
+      sublinea: ["AIRE", "GASOLINA", "ACEITE", "ACEITE INDUSTRIAL", "COMBUSTIBLE INDUSTRIAL", "AIRE INDUSTRIAL"],
     },
     {
       id: 4,
@@ -45,7 +30,7 @@ export const GpCategoryFilter = ({ handleSubcategoryChange, handleSearch }) => {
     },
     {
       id: 6,
-      linea: "BATERIA MOTO",
+      linea: "BATERIAS MOTO",
       sublinea: ["CHECK"],
     },
     {
@@ -55,7 +40,7 @@ export const GpCategoryFilter = ({ handleSubcategoryChange, handleSearch }) => {
     },
     {
       id: 8,
-      linea: "MODULOS GASOLINA",
+      linea: "MODULOS DE GASOLINA",
       sublinea: ["CHECK"],
     },
     {
@@ -84,15 +69,15 @@ export const GpCategoryFilter = ({ handleSubcategoryChange, handleSearch }) => {
   const [selectedSubCategory, setSelectedSubCategory] = useState("");
   const [searchbar, setSearchbar] = useState("");
 
-  const handleCategoryChange = (event) => {
-    setSelectedCategory(event.target.value);
-    setSelectedSubCategory("");
+  // const handleCategoryChange = (event) => {
+  //   setSelectedCategory(event.target.value);
+  //   setSelectedSubCategory("");
 
-    const filteredData = mockData.filter(
-      (item) => item.linea === event.target.value
-    );
-    setoptionSubcategory(filteredData[0].sublinea);
-  };
+  //   const filteredData = mockData.filter(
+  //     (item) => item.linea === event.target.value
+  //   );
+  //   setoptionSubcategory(filteredData[0].sublinea);
+  // };
 
   return (
     <Box
@@ -108,7 +93,14 @@ export const GpCategoryFilter = ({ handleSubcategoryChange, handleSearch }) => {
           labelId="category-select"
           label="Categoría"
           value={selectedCategory}
-          onChange={handleCategoryChange}
+          onChange={(value) => {
+            handleCategoryChange(value), setSelectedCategory(value.target.value);
+            setSelectedSubCategory("");
+            handleSubcategoryChange("");
+
+            const filteredData = mockData.filter((item) => item.linea === value.target.value);
+            setoptionSubcategory(filteredData[0].sublinea);
+          }}
         >
           {mockData.map((item) => (
             <MenuItem key={item.id} value={item.linea}>

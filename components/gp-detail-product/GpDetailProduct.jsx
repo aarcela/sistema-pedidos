@@ -1,12 +1,4 @@
-import {
-  Box,
-  Card,
-  CardContent,
-  CardMedia,
-  TextField,
-  Tooltip,
-  Typography,
-} from "@mui/material";
+import { Box, Card, CardContent, CardMedia, TextField, Tooltip, Typography } from "@mui/material";
 import React from "react";
 import GpButton from "../gp-button/GpButton";
 
@@ -19,7 +11,7 @@ const GpDetailProduct = ({ selected, clickFunction, handleClose }) => {
         display: "flex",
         position: "fixed",
         width: "100vw",
-        height: "100vh",
+        height: "100%",
         zIndex: "1",
         top: "0",
         flexDirection: "column",
@@ -38,7 +30,7 @@ const GpDetailProduct = ({ selected, clickFunction, handleClose }) => {
           borderRadius: "0",
           borderBottom: "1px solid #ccc",
           margin: "auto",
-          height: "40vh",
+          height: "auto",
           marginLeft: "15%",
           zIndex: 2,
         }}
@@ -69,12 +61,7 @@ const GpDetailProduct = ({ selected, clickFunction, handleClose }) => {
                 overflow: "hidden",
               }}
             >
-              <Typography
-                variant="p"
-                color="black"
-                fontWeight="bold"
-                style={{ wordWrap: "break-word" }}
-              >
+              <Typography variant="p" color="black" fontWeight="bold" style={{ wordWrap: "break-word" }}>
                 {selected.Descripcion}
               </Typography>
             </span>
@@ -128,11 +115,7 @@ const GpDetailProduct = ({ selected, clickFunction, handleClose }) => {
               disabled={selected.Disponible > 0 ? false : true}
               clickFunction={() => clickFunction(selected)}
             />
-            <GpButton
-              text="Cancelar"
-              bgColor="#505050"
-              clickFunction={() => handleClose()}
-            />
+            <GpButton text="Cancelar" bgColor="#505050" clickFunction={() => handleClose()} />
           </Box>
         </CardContent>
       </Card>

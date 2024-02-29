@@ -19,6 +19,7 @@ const Dashboard = () => {
   const [page, setPage] = React.useState(1);
   const [totalPages, setTotalPages] = React.useState(0);
   const [selectedSubcategory, setSelectedSubcategory] = React.useState("");
+  const [selectedCategory, setSelectedCategory] = React.useState("");
   const [inputSearch, setInputSearch] = React.useState("");
   const clickFunction = (value) => {
     if (parseInt(value.quantity, 10) <= 0 || parseInt(value.quantity, 10) > value.Disponible) {
@@ -52,7 +53,11 @@ const Dashboard = () => {
   };
 
   const handleSubcategoryChange = (value) => {
-    setSelectedSubcategory(value.target.value);
+    value != "" ? setSelectedSubcategory(value.target.value) : setSelectedSubcategory("");
+  };
+
+  const handleCategoryChange = (value) => {
+    setSelectedCategory(value.target.value);
   };
 
   const handleSearch = (value) => {
@@ -78,8 +83,13 @@ const Dashboard = () => {
               Listado de Productos
             </Typography>
 
-            <GpCategoryFilter handleSubcategoryChange={handleSubcategoryChange} handleSearch={handleSearch} />
+            <GpCategoryFilter
+              handleSubcategoryChange={handleSubcategoryChange}
+              handleSearch={handleSearch}
+              handleCategoryChange={handleCategoryChange}
+            />
             {inventory
+              .filter((item) => item.Linea.toLowerCase().includes(selectedCategory.toLocaleLowerCase()))
               .filter((item) => item.SubLinea.toLowerCase().includes(selectedSubcategory.toLocaleLowerCase()))
               .filter((item) => item.CodAlmacen.toLowerCase().includes(inputSearch.toLocaleLowerCase()))
               .slice((page - 1) * rowsPerPage, page * rowsPerPage)
