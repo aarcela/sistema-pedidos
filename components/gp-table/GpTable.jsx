@@ -60,7 +60,7 @@ const GpTable = ({
                 onStateChange={() => {
                   if (showTotal) {
                     const total = data
-                      .map((item) => parseFloat(item.Precio))
+                      .map((item) => parseFloat(item.Precio) * item.quantity)
                       .reduce((a, b) => a + b, 0);
                     showTotal && setTotal(total);
                   }
