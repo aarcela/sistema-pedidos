@@ -42,6 +42,7 @@ const Dashboard = () => {
       const data = await res.json();
 
       data.map((row) => (row.quantity = 1));
+      console.log(data);
       setInventory(data);
       setTotalPages(Math.ceil(data.length / rowsPerPage));
     };
@@ -91,7 +92,7 @@ const Dashboard = () => {
             {inventory
               .filter((item) => item.Linea.toLowerCase().includes(selectedCategory.toLocaleLowerCase()))
               .filter((item) => item.SubLinea.toLowerCase().includes(selectedSubcategory.toLocaleLowerCase()))
-              .filter((item) => item.CodAlmacen.toLowerCase().includes(inputSearch.toLocaleLowerCase()))
+              .filter((item) => item.Descripcion.toLowerCase().includes(inputSearch.toLocaleLowerCase()))
               .slice((page - 1) * rowsPerPage, page * rowsPerPage)
               .map((item, index) => (
                 <GpCard key={index} data={item} clickFunction={() => clickFunction(item)} />

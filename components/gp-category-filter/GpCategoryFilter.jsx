@@ -133,7 +133,7 @@ export const GpCategoryFilter = ({ handleCategoryChange, handleSubcategoryChange
       <FormControl sx={{ minWidth: 170, margin: "auto" }}>
         <TextField
           id="outlined-basic"
-          label="Búqueda por código"
+          label="Búqueda"
           value={searchbar}
           onChange={(value) => {
             handleSearch(value);
