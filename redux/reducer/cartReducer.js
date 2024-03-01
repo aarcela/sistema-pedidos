@@ -16,17 +16,13 @@ export function cartReducer(state = initialState, action) {
         return { ...state, cart: helper };
       }
     case types.removeItem:
-      let removeHelper = [...state.cart];
-      removeHelper = state.cart.filter((element) => {
-        return element.CodArticulo !== action.payload;
-      });
+      return { ...state, cart: state.cart.filter((element) => element.CodArticulo !== action.payload) };
+    case types.emptyCart:
+      return { ...state, cart: [] };
 
-      return { ...state, cart: removeHelper };
     case types.listItem:
       return { ...state };
     default:
       return state;
   }
 }
-
-//filter element array?

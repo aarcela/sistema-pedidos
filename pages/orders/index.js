@@ -11,9 +11,9 @@ import GpToast from "../../components/gp-toast/GpToast";
 
 const Orders = () => {
   const [modalData, setModalData] = React.useState({});
-  const [isOpen, setIsOpen] = React.useState(false)
+  const [isOpen, setIsOpen] = React.useState(false);
   const [orders, setOrders] = React.useState([]);
-  const [message, setMessage] = React.useState('')
+  const [message, setMessage] = React.useState("");
   const userData = useSelector((state) => state.user);
   const columns = [
     {
@@ -77,13 +77,12 @@ const Orders = () => {
 
   const showModal = (data) => {
     setModalData(data);
-    setIsOpen(true)
+    setIsOpen(true);
   };
 
   React.useEffect(() => {
-
     const fetchOrders = async () => {
-      const ordersUrl = '';
+      const ordersUrl = "";
       const headers = {};
       const options = {
         method: "GET",
@@ -101,12 +100,11 @@ const Orders = () => {
       userData?.user[0]?.roles === roles.admin
         ? (ordersUrl = "pedidototales")
         : (ordersUrl = `pedidosporcliente?codCliente=${userData?.user[0]?.co_cli}&status=0`);
-        // ? setOrdersUrl(`pedidostotales`)
-        // : setOrdersUrl(
-        //     `pedidosporcliente?codCliente=${userData?.user[0]?.co_cli}&status=0`
-        //   );
-      console.log(ordersUrl)
-      if(!ordersUrl) return;
+      // ? setOrdersUrl(`pedidostotales`)
+      // : setOrdersUrl(
+      //     `pedidosporcliente?codCliente=${userData?.user[0]?.co_cli}&status=0`
+      //   );
+      if (!ordersUrl) return;
       const res = await fetch(
         `http://intelinet.com.ve:8090/apigrupopuma/pedido/${ordersUrl}`,
         // `http://intelinet.com.ve:8090/apigrupopuma/pedido/pedidosporcliente?codCliente=200042362 &status=0`,
@@ -119,7 +117,7 @@ const Orders = () => {
         }, 3000);
       }
       const data = await res.json();
-      setOrders(data)
+      setOrders(data);
     };
     fetchOrders();
   }, []);
@@ -129,16 +127,11 @@ const Orders = () => {
       <NavBar>
         {/* <DataGrid rows={orders} columns={columns} sx={{ marginTop: "5rem" }} /> */}
         {orders.length !== 0 && (
-          <GpTable
-            title="Pedidos"
-            data={orders}
-            columns={columns}
-            clickFunction={(data) => showModal(data)}
-          ></GpTable>
+          <GpTable title="Pedidos" data={orders} columns={columns} clickFunction={(data) => showModal(data)}></GpTable>
         )}
       </NavBar>
-      {isOpen && <GpModal isOpen={isOpen} modalData={modalData}/>}
-      {message !== '' && <GpToast message={message}/>}
+      {isOpen && <GpModal isOpen={isOpen} modalData={modalData} />}
+      {message !== "" && <GpToast message={message} />}
     </>
   );
 };

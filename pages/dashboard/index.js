@@ -42,7 +42,6 @@ const Dashboard = () => {
       const data = await res.json();
 
       data.map((row) => (row.quantity = 1));
-      console.log(data);
       setInventory(data);
       setTotalPages(Math.ceil(data.length / rowsPerPage));
     };

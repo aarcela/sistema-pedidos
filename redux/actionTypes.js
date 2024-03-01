@@ -16,6 +16,15 @@ export const removeItem = (elementID) => {
     });
   };
 };
+
+export const emptyCart = () => {
+  return async (dispatch, getState) => {
+    return dispatch({
+      type: types.emptyCart,
+    });
+  };
+};
+
 export const addUser = (user) => {
   return async (dispatch, getState) => {
     return dispatch({

@@ -4,7 +4,7 @@ import GpButton from "../../components/gp-button/GpButton";
 import GpTable from "../../components/gp-table/GpTable";
 import NavBar from "../../components/navBar/NavBar";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { removeItem } from "../../redux/actionTypes";
+import { emptyCart, removeItem } from "../../redux/actionTypes";
 import { Box } from "@mui/system";
 import axios from "axios";
 import GpToast from "../../components/gp-toast/GpToast";
@@ -107,9 +107,7 @@ const Cart = () => {
       },
     };
 
-    const subTotal = cart?.cart
-      ?.map((item) => parseFloat(item.subTotal))
-      .reduce((a, b) => a + b, 0);
+    const subTotal = cart?.cart?.map((item) => parseFloat(item.subTotal)).reduce((a, b) => a + b, 0);
 
     const cartPedido = cart?.cart?.map((element) => {
       return {
@@ -119,27 +117,26 @@ const Cart = () => {
       };
     });
 
+    //TODO: CHECK IN PRODUCTION FOR TH CORRECT COD AND RIF
     const body = {
-      codCliente: userData?.user[0]?.co_cli,
+      // codCliente: "200042362",
+      codCliente: userData?.user[0]?.co_cli ? userData?.user[0]?.co_cli : "200042362",
       codVendedorProfit: "puma",
       descuento: 0,
       descuentoPorcentaje: 0,
       impuesto: 0,
       subTotal: subTotal,
       total: subTotal,
-      rif: userData?.user[0]?.rif,
+      rif: userData?.user[0]?.rif ? userData?.user[0]?.rif : '"J-000"',
       PedidoDetalle: cartPedido,
     };
 
     axios
-      .post(
-        "http://intelinet.com.ve:8090/apigrupopuma/pedido/crearpedido",
-        body,
-        headers
-      )
+      .post("http://intelinet.com.ve:8090/apigrupopuma/pedido/crearpedido", body, headers)
       .then(function (response) {
         setResponseMessage("Pedido creado");
-        // router.push("/dashboard");
+        dispatch(emptyCart());
+        router.push("/orders");
       })
       .catch(function (error) {
         setResponseMessage("Error creando pedido");
@@ -186,12 +183,7 @@ const Cart = () => {
             width: "100%",
           }}
         >
-          {cart?.cart?.length > 0 && (
-            <GpButton
-              text="Confirmar Pedido"
-              clickFunction={() => createOrder()}
-            ></GpButton>
-          )}
+          {cart?.cart?.length > 0 && <GpButton text="Confirmar Pedido" clickFunction={() => createOrder()}></GpButton>}
         </Box>
         {responseMessage && <GpToast message={responseMessage} />}
       </NavBar>

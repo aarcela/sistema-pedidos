@@ -115,7 +115,7 @@ const GpDetailProduct = ({ selected, clickFunction, handleClose }) => {
               disabled={selected.Disponible > 0 ? false : true}
               clickFunction={() => clickFunction(selected)}
             />
-            <GpButton text="Cancelar" bgColor="#505050" clickFunction={() => handleClose()} />
+            <GpButton text="Seguir comprando" bgColor="#505050" clickFunction={() => handleClose()} />
           </Box>
         </CardContent>
       </Card>
