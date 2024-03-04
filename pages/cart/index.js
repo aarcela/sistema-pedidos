@@ -132,7 +132,7 @@ const Cart = () => {
     };
 
     axios
-      .post("http://intelinet.com.ve:8090/apigrupopuma/pedido/crearpedido", body, headers)
+      .post("http://38.170.153.244:50000/apigrupopuma/pedido/crearpedido", body, headers)
       .then(function (response) {
         setResponseMessage("Pedido creado");
         dispatch(emptyCart());

@@ -106,7 +106,7 @@ const Orders = () => {
       //   );
       if (!ordersUrl) return;
       const res = await fetch(
-        `http://intelinet.com.ve:8090/apigrupopuma/pedido/${ordersUrl}`,
+        `http://38.170.153.244:50000/pedido/${ordersUrl}`,
         // `http://intelinet.com.ve:8090/apigrupopuma/pedido/pedidosporcliente?codCliente=200042362 &status=0`,
         options
       );

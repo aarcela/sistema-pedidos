@@ -38,7 +38,7 @@ const Dashboard = () => {
         method: "GET",
       };
 
-      const res = await fetch("http://intelinet.com.ve:8090/apigrupopuma/inventario/articulosconstock", options);
+      const res = await fetch("http://38.170.153.244:50000/inventario/articulosconstock", options);
       const data = await res.json();
 
       data.map((row) => (row.quantity = 1));
