@@ -66,11 +66,7 @@ const Orders = () => {
       flex: 0.5,
       headerClassName: "primary-bg",
       renderCell: (cellValues) => {
-        return cellValues.row.value ? (
-          <GpButton text="Sí" bgColor="#48D98A" />
-        ) : (
-          <GpButton text="No" bgColor="#EC2139" />
-        );
+        return cellValues.row.value ? <GpButton text="Sí" bgColor="#48D98A" /> : <GpButton text="No" bgColor="#EC2139" />;
       },
     },
   ];
@@ -97,17 +93,15 @@ const Orders = () => {
         }, 3000);
         return;
       }
-      userData?.user[0]?.roles === roles.admin
-        ? (ordersUrl = "pedidototales")
-        : (ordersUrl = `pedidosporcliente?codCliente=${userData?.user[0]?.co_cli}&status=0`);
+      userData?.user[0]?.roles === roles.admin ? (ordersUrl = "pedidototales") : (ordersUrl = `pedidosporcliente?codCliente=${userData?.user[0]?.co_cli}&status=0`);
       // ? setOrdersUrl(`pedidostotales`)
       // : setOrdersUrl(
       //     `pedidosporcliente?codCliente=${userData?.user[0]?.co_cli}&status=0`
       //   );
       if (!ordersUrl) return;
       const res = await fetch(
-        `http://intelinet.com.ve:8090/apigrupopuma/pedido/${ordersUrl}`,
-        // `http://intelinet.com.ve:8090/apigrupopuma/pedido/pedidosporcliente?codCliente=200042362 &status=0`,
+        `http://38.170.153.244:50000/pedido/${ordersUrl}`,
+        // `http://38.170.153.244:50000/pedido/pedidosporcliente?codCliente=200042362 &status=0`,
         options
       );
       if (!data) {
@@ -126,9 +120,7 @@ const Orders = () => {
     <>
       <NavBar>
         {/* <DataGrid rows={orders} columns={columns} sx={{ marginTop: "5rem" }} /> */}
-        {orders.length !== 0 && (
-          <GpTable title="Pedidos" data={orders} columns={columns} clickFunction={(data) => showModal(data)}></GpTable>
-        )}
+        {orders.length !== 0 && <GpTable title="Pedidos" data={orders} columns={columns} clickFunction={(data) => showModal(data)}></GpTable>}
       </NavBar>
       {isOpen && <GpModal isOpen={isOpen} modalData={modalData} />}
       {message !== "" && <GpToast message={message} />}

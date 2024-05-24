@@ -76,14 +76,7 @@ const Cart = () => {
       // flex: 1,
       headerClassName: "primary-bg",
       renderCell: (cellValues) => {
-        return (
-          <GpButton
-            icon={<DeleteIcon />}
-            bgColor="transparent"
-            textColor="#505050"
-            clickFunction={() => clickFunction(cellValues.row.CodArticulo)}
-          />
-        );
+        return <GpButton icon={<DeleteIcon />} bgColor="transparent" textColor="#505050" clickFunction={() => clickFunction(cellValues.row.CodArticulo)} />;
       },
     },
   ];
@@ -132,7 +125,7 @@ const Cart = () => {
     };
 
     axios
-      .post("http://intelinet.com.ve:8090/apigrupopuma/pedido/crearpedido", body, headers)
+      .post("http://38.170.153.244:50000/pedido/crearpedido", body, headers)
       .then(function (response) {
         setResponseMessage("Pedido creado");
         dispatch(emptyCart());
@@ -166,14 +159,7 @@ const Cart = () => {
             <Loader />
           </Box>
         )}
-        <GpTable
-          columns={columns}
-          data={cart.cart}
-          title="Carrito"
-          showTotal="true"
-          height="50vh"
-          clickFunction={clickFunction}
-        ></GpTable>
+        <GpTable columns={columns} data={cart.cart} title="Carrito" showTotal="true" height="50vh" clickFunction={clickFunction}></GpTable>
         <Box
           sx={{
             justifyContent: "flex-end",

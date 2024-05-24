@@ -15,50 +15,43 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState("");
   const router = useRouter();
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
-   const headers = {};
-   const options = {
-     method: "GET",
-     mode: "cors",
-     headers: headers,
-   };
+  const headers = {};
+  const options = {
+    method: "GET",
+    mode: "cors",
+    headers: headers,
+  };
 
   const handleLogin = async () => {
-    setIsError('')
+    setIsError("");
     if (email && password) {
       setIsLoading(true);
 
-      
-      const res = await fetch(
-        `http://intelinet.com.ve:8090/apigrupopuma/cliente/login?usuario=${email}&password=${password}`,
-        options
-      );
+      const res = await fetch(`http://38.170.153.244:50000/cliente/login?usuario=${email}&password=${password}`, options);
       try {
-        const usuario = await res.json()
-        usuario.roles = roles.client
+        const usuario = await res.json();
+        console.log("Data del usuario: ", usuario);
+        usuario.roles = roles.client;
         dispatch(addUser(usuario));
         router.push("/dashboard");
-        return
+        return;
       } catch (error) {
         setIsError("Credenciales incorrectas");
       } finally {
         setIsLoading(false);
       }
     }
-    setIsLoading(false)
-    return
+    setIsLoading(false);
+    return;
   };
 
-  const passwordRecovery = async () =>{
-
-    const res = await fetch(
-      `http://intelinet.com.ve:8090/apigrupopuma/cliente/recuperarcontrasena?usuario=${email}`,
-      options
-    )
-    .then((response) => response.text())
-    .then((response) => setIsError(response));
-  }
+  const passwordRecovery = async () => {
+    const res = await fetch(`http://38.170.153.244:50000/cliente/recuperarcontrasena?usuario=${email}`, options)
+      .then((response) => response.text())
+      .then((response) => setIsError(response));
+  };
 
   return (
     <Box className={styles.main_container}>
@@ -155,22 +148,14 @@ const Login = () => {
             >
               Recuperar Contraseña
             </Button>
-            {isError &&
-            <Typography
-              variant="h6"
-              color="#EC2139"
-              component="strong"
-              sx={{ marginTop: "2rem" }}>
+            {isError && (
+              <Typography variant="h6" color="#EC2139" component="strong" sx={{ marginTop: "2rem" }}>
                 {isError}
-            </Typography>}
+              </Typography>
+            )}
           </Box>
         </Card>
-        <Typography
-          variant="h6"
-          color="#505050"
-          fontWeight="lighter"
-          sx={{ marginTop: "2rem" }}
-        >
+        <Typography variant="h6" color="#505050" fontWeight="lighter" sx={{ marginTop: "2rem" }}>
           ¿Desea formar parte de nuestros distribuidores?
         </Typography>
         <Typography variant="h6" color="#091A5D" component="strong">

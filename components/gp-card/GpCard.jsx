@@ -2,10 +2,12 @@ import { Box, Card, CardContent, CardMedia, TextField, Tooltip, Typography } fro
 import React, { useState } from "react";
 import GpButton from "../gp-button/GpButton";
 import GpDetailProduct from "../gp-detail-product/GpDetailProduct";
+import { useSelector } from "react-redux";
 
 const GpCard = ({ data, clickFunction }) => {
   const [selected, setselected] = React.useState([]);
   const [open, setOpen] = React.useState(false);
+  const userData = useSelector((state) => state.user);
 
   const handleClick = (data) => {
     setOpen(true);
@@ -31,12 +33,7 @@ const GpCard = ({ data, clickFunction }) => {
             margin: "auto",
           }}
         >
-          <CardMedia
-            component="img"
-            sx={{ width: 75, height: 75, flexBasis: "10%" }}
-            image="/images/img_not_available.jpg"
-            alt="Grupo Puma"
-          />
+          <CardMedia component="img" sx={{ width: 75, height: 75, flexBasis: "10%" }} image="/images/img_not_available.jpg" alt="Grupo Puma" />
           <Box
             sx={{
               display: "flex",
@@ -75,7 +72,11 @@ const GpCard = ({ data, clickFunction }) => {
               Precio:
             </Typography>
             <Typography variant="subtitle1" color="black" component="div">
-              REF: {data.Precio}
+              REF: {userData.user[0].tip_cli.trim() === "01" && data.Precio}
+              {userData.user[0].tip_cli.trim() === "02" && data.Precio2}
+              {userData.user[0].tip_cli.trim() === "03" && data.Precio3}
+              {userData.user[0].tip_cli.trim() === "04" && data.Precio4}
+              {userData.user[0].tip_cli.trim() === "05" && data.Precio5}
             </Typography>
           </Box>
           <Box
@@ -87,17 +88,9 @@ const GpCard = ({ data, clickFunction }) => {
               justifyContent: "space-between",
             }}
           >
-            {(data.Disponible > 0) & (data.Precio > 0) ? (
-              <GpButton text="Disponible" bgColor="#48D98A" />
-            ) : (
-              <GpButton text="No Disponible" bgColor="#EC2139" />
-            )}
+            {(data.Disponible > 0) & (data.Precio > 0) ? <GpButton text="Disponible" bgColor="#48D98A" /> : <GpButton text="No Disponible" bgColor="#EC2139" />}
 
-            <GpButton
-              text="Añadir"
-              disabled={(data.Disponible > 0) & (data.Precio > 0) ? false : true}
-              clickFunction={() => handleClick(data)}
-            />
+            <GpButton text="Añadir" disabled={(data.Disponible > 0) & (data.Precio > 0) ? false : true} clickFunction={() => handleClick(data)} />
           </Box>
         </Card>
       )}

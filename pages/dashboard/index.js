@@ -1,11 +1,9 @@
 import React from "react";
 import NavBar from "../../components/navBar/NavBar";
-import GpTable from "../../components/gp-table/GpTable";
-import GpButton from "../../components/gp-button/GpButton";
 import { useDispatch } from "react-redux";
 import { addItem } from "../../redux/actionTypes";
 import Loader from "../../components/loader/Loader";
-import { Box, Card, CardContent, TextField, Tooltip, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import GpToast from "../../components/gp-toast/GpToast";
 import GpCard from "../../components/gp-card/GpCard";
 import { GpCategoryFilter } from "../../components/gp-category-filter/GpCategoryFilter";
@@ -38,7 +36,7 @@ const Dashboard = () => {
         method: "GET",
       };
 
-      const res = await fetch("http://intelinet.com.ve:8090/apigrupopuma/inventario/articulosconstock", options);
+      const res = await fetch("http://38.170.153.244:50000/inventario/articulosconstock", options);
       const data = await res.json();
 
       data.map((row) => (row.quantity = 1));
@@ -83,11 +81,7 @@ const Dashboard = () => {
               Listado de Productos
             </Typography>
 
-            <GpCategoryFilter
-              handleSubcategoryChange={handleSubcategoryChange}
-              handleSearch={handleSearch}
-              handleCategoryChange={handleCategoryChange}
-            />
+            <GpCategoryFilter handleSubcategoryChange={handleSubcategoryChange} handleSearch={handleSearch} handleCategoryChange={handleCategoryChange} />
             {inventory
               .filter((item) => item.Linea.toLowerCase().includes(selectedCategory.toLocaleLowerCase()))
               .filter((item) => item.SubLinea.toLowerCase().includes(selectedSubcategory.toLocaleLowerCase()))
@@ -96,12 +90,7 @@ const Dashboard = () => {
               .map((item, index) => (
                 <GpCard key={index} data={item} clickFunction={() => clickFunction(item)} />
               ))}
-            <GpPagination
-              handleChangePage={handleChangePage}
-              page={page}
-              totalPages={totalPages}
-              rowsPerPage={rowsPerPage}
-            />
+            <GpPagination handleChangePage={handleChangePage} page={page} totalPages={totalPages} rowsPerPage={rowsPerPage} />
           </Box>
         ) : (
           <Box
