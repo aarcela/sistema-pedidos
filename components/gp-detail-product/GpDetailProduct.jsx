@@ -1,9 +1,22 @@
 import { Box, Card, CardContent, CardMedia, TextField, Tooltip, Typography } from "@mui/material";
 import React from "react";
 import GpButton from "../gp-button/GpButton";
+import { useSelector } from "react-redux";
 
 const GpDetailProduct = ({ selected, clickFunction, handleClose }) => {
-  const [total, setTotal] = React.useState(selected.Precio);
+  const [total, setTotal] = React.useState(0);
+  const [precio, setPrecio] = React.useState(0);
+  const userData = useSelector((state) => state.user);
+
+  React.useEffect(() => {
+    if (userData.user[0].tip_cli.trim() === "01") setPrecio(selected.Precio);
+    if (userData.user[0].tip_cli.trim() === "02") setPrecio(selected.Precio2);
+    if (userData.user[0].tip_cli.trim() === "03") setPrecio(selected.Precio3);
+    if (userData.user[0].tip_cli.trim() === "04") setPrecio(selected.Precio4);
+    if (userData.user[0].tip_cli.trim() === "05") setPrecio(selected.Precio5);
+    setTotal(precio);
+  }, []);
+
   return (
     <Box
       sx={{
@@ -35,12 +48,7 @@ const GpDetailProduct = ({ selected, clickFunction, handleClose }) => {
           zIndex: 2,
         }}
       >
-        <CardMedia
-          component="img"
-          sx={{ width: "50%", height: "70%" }}
-          image="/images/img_not_available.jpg"
-          alt="Grupo Puma"
-        />
+        <CardMedia component="img" sx={{ width: "50%", height: "70%" }} image="/images/img_not_available.jpg" alt="Grupo Puma" />
         <CardContent
           sx={{
             display: "flex",
@@ -90,7 +98,7 @@ const GpDetailProduct = ({ selected, clickFunction, handleClose }) => {
               </Typography>
             </Box>
             <Box sx={{ display: "flex", gap: "1rem", flexDirection: "column" }}>
-              <Typography color="black">{selected.Precio}</Typography>
+              <Typography color="black">{precio}</Typography>
               <TextField
                 InputProps={{
                   inputProps: { min: 1, max: selected.Disponible },
@@ -101,7 +109,7 @@ const GpDetailProduct = ({ selected, clickFunction, handleClose }) => {
                 placeholder="1"
                 onChange={(e, value) => {
                   selected.quantity = e.target.value;
-                  setTotal(selected.quantity * selected.Precio);
+                  setTotal(selected.quantity * precio);
                 }}
               />
               <Typography color="black" fontWeight="bold">
@@ -110,11 +118,7 @@ const GpDetailProduct = ({ selected, clickFunction, handleClose }) => {
             </Box>
           </Box>
           <Box sx={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-            <GpButton
-              text="Añadir"
-              disabled={selected.Disponible > 0 ? false : true}
-              clickFunction={() => clickFunction(selected)}
-            />
+            <GpButton text="Añadir" disabled={selected.Disponible > 0 ? false : true} clickFunction={() => clickFunction(selected)} />
             <GpButton text="Seguir comprando" bgColor="#505050" clickFunction={() => handleClose()} />
           </Box>
         </CardContent>

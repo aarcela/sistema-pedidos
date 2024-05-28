@@ -1,22 +1,11 @@
 import React, { useState } from "react";
-import {
-  DataGrid,
-  GridFilterPanel,
-  GridToolbarContainer,
-  GridToolbarQuickFilter,
-  esES,
-} from "@mui/x-data-grid";
+import { DataGrid, esES } from "@mui/x-data-grid";
 import { Box, Typography } from "@mui/material";
+import { useSelector } from "react-redux";
 
-const GpTable = ({
-  columns,
-  data,
-  title,
-  showTotal = false,
-  clickFunction,
-  height = "70vh",
-}) => {
+const GpTable = ({ columns, data, title, showTotal = false, clickFunction, height = "70vh" }) => {
   const [total, setTotal] = useState(0);
+  const userData = useSelector((state) => state.user);
   return (
     <>
       <Box
@@ -27,13 +16,7 @@ const GpTable = ({
           width: "100%",
         }}
       >
-        <Typography
-          component="strong"
-          variant="h4"
-          color="#505050"
-          fontWeight="lighter"
-          sx={{ marginBottom: "2rem" }}
-        >
+        <Typography component="strong" variant="h4" color="#505050" fontWeight="lighter" sx={{ marginBottom: "2rem" }}>
           {title}
         </Typography>
 
@@ -48,8 +31,7 @@ const GpTable = ({
                   if (title === "Pedidos") {
                     return row.fact_num + Math.random();
                   }
-                  if (title === "Detalle Pedido")
-                    return row.codProducto + Math.random();
+                  if (title === "Detalle Pedido") return row.codProducto + Math.random();
                   return row.CodArticulo + Math.random();
                 }}
                 componentsProps={{
@@ -59,15 +41,24 @@ const GpTable = ({
                 }}
                 onStateChange={() => {
                   if (showTotal) {
-                    const total = data
-                      .map((item) => parseFloat(item.Precio) * item.quantity)
-                      .reduce((a, b) => a + b, 0);
-                    showTotal && setTotal(total);
+                    let total;
+                    if (userData.user[0].tip_cli.trim() === "01") {
+                      total = data.map((item) => parseFloat(item.Precio) * item.quantity).reduce((a, b) => a + b, 0);
+                    }
+                    if (userData.user[0].tip_cli.trim() === "02") {
+                      total = data.map((item) => parseFloat(item.Precio2) * item.quantity).reduce((a, b) => a + b, 0);
+                    }
+                    if (userData.user[0].tip_cli.trim() === "03") {
+                      total = data.map((item) => parseFloat(item.Precio3) * item.quantity).reduce((a, b) => a + b, 0);
+                    }
+                    if (userData.user[0].tip_cli.trim() === "04") {
+                      total = data.map((item) => parseFloat(item.Precio4) * item.quantity).reduce((a, b) => a + b, 0);
+                    }
+
+                    showTotal && setTotal(total.toFixed(2));
                   }
                 }}
-                getRowClassName={(params) =>
-                  params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd"
-                }
+                getRowClassName={(params) => (params.indexRelativeToCurrentPage % 2 === 0 ? "even" : "odd")}
                 sx={{
                   borderRadius: "0",
                   maxHeight: "440",
@@ -108,12 +99,7 @@ const GpTable = ({
             width: "100%",
           }}
         >
-          <Typography
-            component="strong"
-            variant="h4"
-            color="#505050"
-            fontWeight="bold"
-          >
+          <Typography component="strong" variant="h4" color="#505050" fontWeight="bold">
             Total: {total} USD
           </Typography>
         </Box>
