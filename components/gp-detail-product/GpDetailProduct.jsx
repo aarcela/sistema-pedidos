@@ -15,7 +15,7 @@ const GpDetailProduct = ({ selected, clickFunction, handleClose }) => {
     if (userData.user[0].tip_cli.trim() === "04") setPrecio(selected.Precio4);
     if (userData.user[0].tip_cli.trim() === "05") setPrecio(selected.Precio5);
     setTotal(precio);
-  }, []);
+  }, [userData.user, selected.Precio, selected.Precio2, selected.Precio3, selected.Precio4, selected.Precio5, precio]);
 
   return (
     <Box
@@ -48,7 +48,12 @@ const GpDetailProduct = ({ selected, clickFunction, handleClose }) => {
           zIndex: 2,
         }}
       >
-        <CardMedia component="img" sx={{ width: "50%", height: "70%" }} image="/images/img_not_available.jpg" alt="Grupo Puma" />
+        <CardMedia
+          component="img"
+          sx={{ width: "50%", height: "70%" }}
+          image="/images/img_not_available.jpg"
+          alt="Grupo Puma"
+        />
         <CardContent
           sx={{
             display: "flex",
@@ -118,7 +123,11 @@ const GpDetailProduct = ({ selected, clickFunction, handleClose }) => {
             </Box>
           </Box>
           <Box sx={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-            <GpButton text="Añadir" disabled={selected.Disponible > 0 ? false : true} clickFunction={() => clickFunction(selected)} />
+            <GpButton
+              text="Añadir"
+              disabled={selected.Disponible > 0 ? false : true}
+              clickFunction={() => clickFunction(selected)}
+            />
             <GpButton text="Seguir comprando" bgColor="#505050" clickFunction={() => handleClose()} />
           </Box>
         </CardContent>
