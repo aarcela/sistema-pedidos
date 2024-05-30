@@ -50,11 +50,12 @@ const Cart = () => {
       //   `${params.row.CodAlmacen || ""} ${params.row.CodArticulo || ""}`,
     },
     {
-      field:
+      field: () => {
         (userData.user[0].tip_cli.trim() === "01" && "Precio") ||
-        (userData.user[0].tip_cli.trim() === "02" && "Precio2") ||
-        (userData.user[0].tip_cli.trim() === "03" && "Precio3") ||
-        (userData.user[0].tip_cli.trim() === "04" && "Precio4"),
+          (userData.user[0].tip_cli.trim() === "02" && "Precio2") ||
+          (userData.user[0].tip_cli.trim() === "03" && "Precio3") ||
+          (userData.user[0].tip_cli.trim() === "04" && "Precio4");
+      },
       description: "Precio del artículo",
       headerName: "Precio",
       sortable: false,
@@ -89,7 +90,14 @@ const Cart = () => {
       // flex: 1,
       headerClassName: "primary-bg",
       renderCell: (cellValues) => {
-        return <GpButton icon={<DeleteIcon />} bgColor="transparent" textColor="#505050" clickFunction={() => clickFunction(cellValues.row.CodArticulo)} />;
+        return (
+          <GpButton
+            icon={<DeleteIcon />}
+            bgColor="transparent"
+            textColor="#505050"
+            clickFunction={() => clickFunction(cellValues.row.CodArticulo)}
+          />
+        );
       },
     },
   ];
@@ -192,7 +200,14 @@ const Cart = () => {
             <Loader />
           </Box>
         )}
-        <GpTable columns={columns} data={cart.cart} title="Carrito" showTotal="true" height="50vh" clickFunction={clickFunction}></GpTable>
+        <GpTable
+          columns={columns}
+          data={cart.cart}
+          title="Carrito"
+          showTotal="true"
+          height="50vh"
+          clickFunction={clickFunction}
+        ></GpTable>
         <Box
           sx={{
             justifyContent: "flex-end",
