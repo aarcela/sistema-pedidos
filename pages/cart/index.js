@@ -138,11 +138,14 @@ const Cart = () => {
     const cartPedido = cart?.cart?.map((element) => {
       let condicionalPrice;
 
-      if (userData.user[0].tip_cli.trim() === "01") condicionalPrice = data.Precio;
-      if (userData.user[0].tip_cli.trim() === "02") condicionalPrice = data.Precio2;
-      if (userData.user[0].tip_cli.trim() === "03") condicionalPrice = data.Precio3;
-      if (userData.user[0].tip_cli.trim() === "04") condicionalPrice = data.Precio4;
-      if (userData.user[0].tip_cli.trim() === "05") condicionalPrice = data.Precio5;
+      console.log(userData.user[0].tip_cli.trim());
+      console.log("Data: ", element);
+
+      if (userData.user[0].tip_cli.trim() === "01") condicionalPrice = element.Precio;
+      if (userData.user[0].tip_cli.trim() === "02") condicionalPrice = element.Precio2;
+      if (userData.user[0].tip_cli.trim() === "03") condicionalPrice = element.Precio3;
+      if (userData.user[0].tip_cli.trim() === "04") condicionalPrice = element.Precio4;
+      if (userData.user[0].tip_cli.trim() === "05") condicionalPrice = element.Precio5;
 
       return {
         CodProducto: element.CodArticulo,
