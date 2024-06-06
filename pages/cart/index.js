@@ -146,7 +146,7 @@ const Cart = () => {
 
       return {
         CodProducto: element.CodArticulo,
-        Precio: subTotal.toFixed(2),
+        Precio: condicionalPrice.toFixed(2),
         Cantidad: element.quantity,
       };
     });
