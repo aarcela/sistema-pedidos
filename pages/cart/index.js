@@ -120,7 +120,20 @@ const Cart = () => {
       },
     };
 
-    const subTotal = cart?.cart?.map((item) => parseFloat(item.subTotal)).reduce((a, b) => a + b, 0);
+    // const subTotal = cart?.cart?.map((item) => parseFloat(item.subTotal)).reduce((a, b) => a + b, 0);
+    let subTotal;
+    if (userData.user[0].tip_cli.trim() === "01") {
+      subTotal = cart?.cart?.map((item) => parseFloat(item.Precio) * item.quantity).reduce((a, b) => a + b, 0);
+    }
+    if (userData.user[0].tip_cli.trim() === "02") {
+      subTotal = cart?.cart?.map((item) => parseFloat(item.Precio2) * item.quantity).reduce((a, b) => a + b, 0);
+    }
+    if (userData.user[0].tip_cli.trim() === "03") {
+      subTotal = cart?.cart?.map((item) => parseFloat(item.Precio3) * item.quantity).reduce((a, b) => a + b, 0);
+    }
+    if (userData.user[0].tip_cli.trim() === "04") {
+      subTotal = cart?.cart?.map((item) => parseFloat(item.Precio4) * item.quantity).reduce((a, b) => a + b, 0);
+    }
 
     const cartPedido = cart?.cart?.map((element) => {
       let condicionalPrice;
@@ -160,8 +173,8 @@ const Cart = () => {
       descuento: 0,
       descuentoPorcentaje: 0,
       impuesto: 0,
-      subTotal: subTotal,
-      total: subTotal,
+      subTotal: subTotal.toFixed(2),
+      total: subTotal.toFixed(2),
       rif: userData?.user[0]?.rif ? userData?.user[0]?.rif : '"J-000"',
       PedidoDetalle: cartPedido,
     };
