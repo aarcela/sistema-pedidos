@@ -133,7 +133,7 @@ const Cart = () => {
 
       return {
         CodProducto: element.CodArticulo,
-        Precio: condicionalPrice,
+        Precio: subTotal,
         Cantidad: element.quantity,
       };
     });
