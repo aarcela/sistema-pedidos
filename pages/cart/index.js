@@ -131,9 +131,23 @@ const Cart = () => {
       if (userData.user[0].tip_cli.trim() === "04") condicionalPrice = data.Precio4;
       if (userData.user[0].tip_cli.trim() === "05") condicionalPrice = data.Precio5;
 
+      let total;
+      if (userData.user[0].tip_cli.trim() === "01") {
+        total = data.map((item) => parseFloat(item.Precio) * item.quantity).reduce((a, b) => a + b, 0);
+      }
+      if (userData.user[0].tip_cli.trim() === "02") {
+        total = data.map((item) => parseFloat(item.Precio2) * item.quantity).reduce((a, b) => a + b, 0);
+      }
+      if (userData.user[0].tip_cli.trim() === "03") {
+        total = data.map((item) => parseFloat(item.Precio3) * item.quantity).reduce((a, b) => a + b, 0);
+      }
+      if (userData.user[0].tip_cli.trim() === "04") {
+        total = data.map((item) => parseFloat(item.Precio4) * item.quantity).reduce((a, b) => a + b, 0);
+      }
+
       return {
         CodProducto: element.CodArticulo,
-        Precio: subTotal,
+        Precio: total.toFixed(2),
         Cantidad: element.quantity,
       };
     });
@@ -151,6 +165,7 @@ const Cart = () => {
       rif: userData?.user[0]?.rif ? userData?.user[0]?.rif : '"J-000"',
       PedidoDetalle: cartPedido,
     };
+    console.log(body);
 
     axios
       .post("http://38.170.153.244:50000/pedido/crearpedido", body, headers)
