@@ -50,16 +50,23 @@ const Cart = () => {
       //   `${params.row.CodAlmacen || ""} ${params.row.CodArticulo || ""}`,
     },
     {
-      field:
-        (userData?.user[0]?.tip_cli.trim() === "01" && "Precio") ||
-        (userData?.user[0]?.tip_cli.trim() === "02" && "Precio2") ||
-        (userData?.user[0]?.tip_cli.trim() === "03" && "Precio3") ||
-        (userData?.user[0]?.tip_cli.trim() === "04" && "Precio4"),
+      field: "Precio",
       description: "Precio del artículo",
       headerName: "Precio",
       sortable: false,
       flex: 0.5,
       headerClassName: "primary-bg",
+      renderCell: (cellValues) => {
+        let condicionalPrice;
+
+        if (userData.user[0].tip_cli.trim() === "01") condicionalPrice = cellValues.row.Precio;
+        if (userData.user[0].tip_cli.trim() === "02") condicionalPrice = cellValues.row.Precio2;
+        if (userData.user[0].tip_cli.trim() === "03") condicionalPrice = cellValues.row.Precio3;
+        if (userData.user[0].tip_cli.trim() === "04") condicionalPrice = cellValues.row.Precio4;
+        if (userData.user[0].tip_cli.trim() === "05") condicionalPrice = cellValues.row.Precio5;
+
+        return +condicionalPrice;
+      },
       // width: 70,
     },
     {
