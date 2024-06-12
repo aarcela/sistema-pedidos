@@ -86,13 +86,13 @@ const Orders = () => {
         headers: headers,
       };
 
-      if (!userData?.user[0]?.roles) {
-        setMessage("Ha ocurrido un error, por favor ingrese nuevamente");
-        setTimeout(() => {
-          setMessage("");
-        }, 3000);
-        return;
-      }
+      // if (!userData?.user[0]?.roles) {
+      //   setMessage("Ha ocurrido un error, por favor ingrese nuevamente");
+      //   setTimeout(() => {
+      //     setMessage("");
+      //   }, 3000);
+      //   return;
+      // }
       userData?.user[0]?.roles === roles.admin ? (ordersUrl = "pedidototales") : (ordersUrl = `pedidosporcliente?codCliente=${userData?.user[0]?.co_cli}&status=0`);
       // ? setOrdersUrl(`pedidostotales`)
       // : setOrdersUrl(
@@ -104,12 +104,12 @@ const Orders = () => {
         // `http://38.170.153.244:50000/pedido/pedidosporcliente?codCliente=200042362 &status=0`,
         options
       );
-      if (!data) {
-        setMessage("Ha ocurrido un error, por favor ingrese nuevamente");
-        setTimeout(() => {
-          setMessage("");
-        }, 3000);
-      }
+      // if (!data) {
+      //   setMessage("Ha ocurrido un error, por favor ingrese nuevamente");
+      //   setTimeout(() => {
+      //     setMessage("");
+      //   }, 3000);
+      // }
       const data = await res.json();
       setOrders(data);
     };
