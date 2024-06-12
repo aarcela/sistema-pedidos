@@ -51,10 +51,10 @@ const Cart = () => {
     },
     {
       field:
-        (userData.user[0].tip_cli.trim() === "01" && "Precio") ||
-        (userData.user[0].tip_cli.trim() === "02" && "Precio2") ||
-        (userData.user[0].tip_cli.trim() === "03" && "Precio3") ||
-        (userData.user[0].tip_cli.trim() === "04" && "Precio4"),
+        (userData?.user[0]?.tip_cli.trim() === "01" && "Precio") ||
+        (userData?.user[0]?.tip_cli.trim() === "02" && "Precio2") ||
+        (userData?.user[0]?.tip_cli.trim() === "03" && "Precio3") ||
+        (userData?.user[0]?.tip_cli.trim() === "04" && "Precio4"),
       description: "Precio del artículo",
       headerName: "Precio",
       sortable: false,
