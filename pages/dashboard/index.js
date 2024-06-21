@@ -81,7 +81,11 @@ const Dashboard = () => {
               Listado de Productos
             </Typography>
 
-            <GpCategoryFilter handleSubcategoryChange={handleSubcategoryChange} handleSearch={handleSearch} handleCategoryChange={handleCategoryChange} />
+            <GpCategoryFilter
+              handleSubcategoryChange={handleSubcategoryChange}
+              handleSearch={handleSearch}
+              handleCategoryChange={handleCategoryChange}
+            />
             {inventory
               .filter((item) => item.Linea.toLowerCase().includes(selectedCategory.toLocaleLowerCase()))
               .filter((item) => item.SubLinea.toLowerCase().includes(selectedSubcategory.toLocaleLowerCase()))
@@ -90,7 +94,15 @@ const Dashboard = () => {
               .map((item, index) => (
                 <GpCard key={index} data={item} clickFunction={() => clickFunction(item)} />
               ))}
-            <GpPagination handleChangePage={handleChangePage} page={page} totalPages={totalPages} rowsPerPage={rowsPerPage} />
+            <Typography component="strong" variant="h6" color="#505050" sx={{ marginLeft: "2rem" }}>
+              Los precios no incluyen IVA
+            </Typography>
+            <GpPagination
+              handleChangePage={handleChangePage}
+              page={page}
+              totalPages={totalPages}
+              rowsPerPage={rowsPerPage}
+            />
           </Box>
         ) : (
           <Box
