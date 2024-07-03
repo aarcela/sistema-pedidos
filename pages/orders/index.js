@@ -24,7 +24,7 @@ const Orders = () => {
     },
     {
       field: "fact_num",
-      headerName: "Factura",
+      headerName: "Documento",
       headerClassName: "primary-bg",
       sortable: false,
       flex: 0.5,

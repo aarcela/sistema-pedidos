@@ -114,7 +114,7 @@ const GpDetailProduct = ({ selected, clickFunction, handleClose }) => {
                 placeholder="1"
                 onChange={(e, value) => {
                   selected.quantity = e.target.value;
-                  setTotal(selected.quantity * precio);
+                  setTotal((selected.quantity * precio).toFixed(2));
                 }}
               />
               <Typography color="black" fontWeight="bold">
