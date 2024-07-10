@@ -88,6 +88,9 @@ const GpTable = ({ columns, data, title, showTotal = false, clickFunction, heigh
             </>
           )}
         </div>
+        <Typography component="strong" variant="h6" color="#505050">
+          Los precios no incluyen IVA
+        </Typography>
       </Box>
       {showTotal && (
         <Box

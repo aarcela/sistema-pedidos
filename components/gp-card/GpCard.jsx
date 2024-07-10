@@ -33,7 +33,12 @@ const GpCard = ({ data, clickFunction }) => {
             margin: "auto",
           }}
         >
-          <CardMedia component="img" sx={{ width: 75, height: 75, flexBasis: "10%" }} image="/images/img_not_available.jpg" alt="Grupo Puma" />
+          <CardMedia
+            component="img"
+            sx={{ width: 75, height: 75, flexBasis: "10%" }}
+            image="/images/img_not_available.jpg"
+            alt="Grupo Puma"
+          />
           <Box
             sx={{
               display: "flex",
@@ -88,9 +93,17 @@ const GpCard = ({ data, clickFunction }) => {
               justifyContent: "space-between",
             }}
           >
-            {(data.Disponible > 0) & (data.Precio > 0) ? <GpButton text="Disponible" bgColor="#48D98A" /> : <GpButton text="No Disponible" bgColor="#EC2139" />}
+            {(data.Disponible > 0) & (data.Precio > 0) ? (
+              <GpButton text="Disponible" bgColor="#48D98A" />
+            ) : (
+              <GpButton text="No Disponible" bgColor="#EC2139" />
+            )}
 
-            <GpButton text="Añadir" disabled={(data.Disponible > 0) & (data.Precio > 0) ? false : true} clickFunction={() => handleClick(data)} />
+            <GpButton
+              text="Añadir"
+              disabled={(data.Disponible > 0) & (data.Precio > 0) ? false : true}
+              clickFunction={() => handleClick(data)}
+            />
           </Box>
         </Card>
       )}
