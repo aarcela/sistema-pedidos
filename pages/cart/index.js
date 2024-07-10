@@ -85,7 +85,7 @@ const Cart = () => {
         if (userData.user[0].tip_cli.trim() === "04") condicionalPrice = cellValues.row.Precio4;
         if (userData.user[0].tip_cli.trim() === "05") condicionalPrice = cellValues.row.Precio5;
 
-        return +condicionalPrice * cellValues.row.quantity;
+        return +(condicionalPrice * cellValues.row.quantity).toFixed(2);
       },
       // width: 70,
     },

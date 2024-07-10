@@ -48,12 +48,7 @@ const GpDetailProduct = ({ selected, clickFunction, handleClose }) => {
           zIndex: 2,
         }}
       >
-        <CardMedia
-          component="img"
-          sx={{ width: "50%", height: "70%" }}
-          image="/images/img_not_available.jpg"
-          alt="Grupo Puma"
-        />
+        <CardMedia component="img" sx={{ width: "50%", height: "70%" }} image="/images/img_not_available.jpg" alt="Grupo Puma" />
         <CardContent
           sx={{
             display: "flex",
@@ -114,7 +109,7 @@ const GpDetailProduct = ({ selected, clickFunction, handleClose }) => {
                 placeholder="1"
                 onChange={(e, value) => {
                   selected.quantity = e.target.value;
-                  setTotal(selected.quantity * precio);
+                  setTotal((selected.quantity * precio).toFixed(2));
                 }}
               />
               <Typography color="black" fontWeight="bold">
@@ -123,11 +118,7 @@ const GpDetailProduct = ({ selected, clickFunction, handleClose }) => {
             </Box>
           </Box>
           <Box sx={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
-            <GpButton
-              text="Añadir"
-              disabled={selected.Disponible > 0 ? false : true}
-              clickFunction={() => clickFunction(selected)}
-            />
+            <GpButton text="Añadir" disabled={selected.Disponible > 0 ? false : true} clickFunction={() => clickFunction(selected)} />
             <GpButton text="Seguir comprando" bgColor="#505050" clickFunction={() => handleClose()} />
           </Box>
         </CardContent>
