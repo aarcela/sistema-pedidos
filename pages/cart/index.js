@@ -59,11 +59,11 @@ const Cart = () => {
       renderCell: (cellValues) => {
         let condicionalPrice;
 
-        if (userData.user[0].tip_cli.trim() === "01") condicionalPrice = cellValues.row.Precio;
-        if (userData.user[0].tip_cli.trim() === "02") condicionalPrice = cellValues.row.Precio2;
-        if (userData.user[0].tip_cli.trim() === "03") condicionalPrice = cellValues.row.Precio3;
-        if (userData.user[0].tip_cli.trim() === "04") condicionalPrice = cellValues.row.Precio4;
-        if (userData.user[0].tip_cli.trim() === "05") condicionalPrice = cellValues.row.Precio5;
+        if (userData.user[0].precio_a.trim() === "01") condicionalPrice = cellValues.row.Precio;
+        if (userData.user[0].precio_a.trim() === "02") condicionalPrice = cellValues.row.Precio2;
+        if (userData.user[0].precio_a.trim() === "03") condicionalPrice = cellValues.row.Precio3;
+        if (userData.user[0].precio_a.trim() === "04") condicionalPrice = cellValues.row.Precio4;
+        if (userData.user[0].precio_a.trim() === "05") condicionalPrice = cellValues.row.Precio5;
 
         return +condicionalPrice;
       },
@@ -79,11 +79,11 @@ const Cart = () => {
       renderCell: (cellValues) => {
         let condicionalPrice;
 
-        if (userData.user[0].tip_cli.trim() === "01") condicionalPrice = cellValues.row.Precio;
-        if (userData.user[0].tip_cli.trim() === "02") condicionalPrice = cellValues.row.Precio2;
-        if (userData.user[0].tip_cli.trim() === "03") condicionalPrice = cellValues.row.Precio3;
-        if (userData.user[0].tip_cli.trim() === "04") condicionalPrice = cellValues.row.Precio4;
-        if (userData.user[0].tip_cli.trim() === "05") condicionalPrice = cellValues.row.Precio5;
+        if (userData.user[0].precio_a.trim() === "01") condicionalPrice = cellValues.row.Precio;
+        if (userData.user[0].precio_a.trim() === "02") condicionalPrice = cellValues.row.Precio2;
+        if (userData.user[0].precio_a.trim() === "03") condicionalPrice = cellValues.row.Precio3;
+        if (userData.user[0].precio_a.trim() === "04") condicionalPrice = cellValues.row.Precio4;
+        if (userData.user[0].precio_a.trim() === "05") condicionalPrice = cellValues.row.Precio5;
 
         return +(condicionalPrice * cellValues.row.quantity).toFixed(2);
       },
@@ -96,7 +96,14 @@ const Cart = () => {
       // flex: 1,
       headerClassName: "primary-bg",
       renderCell: (cellValues) => {
-        return <GpButton icon={<DeleteIcon />} bgColor="transparent" textColor="#505050" clickFunction={() => clickFunction(cellValues.row.CodArticulo)} />;
+        return (
+          <GpButton
+            icon={<DeleteIcon />}
+            bgColor="transparent"
+            textColor="#505050"
+            clickFunction={() => clickFunction(cellValues.row.CodArticulo)}
+          />
+        );
       },
     },
   ];
@@ -121,30 +128,33 @@ const Cart = () => {
 
     // const subTotal = cart?.cart?.map((item) => parseFloat(item.subTotal)).reduce((a, b) => a + b, 0);
     let subTotal;
-    if (userData.user[0].tip_cli.trim() === "01") {
+    if (userData.user[0].precio_a.trim() === "01") {
       subTotal = cart?.cart?.map((item) => parseFloat(item.Precio) * item.quantity).reduce((a, b) => a + b, 0);
     }
-    if (userData.user[0].tip_cli.trim() === "02") {
+    if (userData.user[0].precio_a.trim() === "02") {
       subTotal = cart?.cart?.map((item) => parseFloat(item.Precio2) * item.quantity).reduce((a, b) => a + b, 0);
     }
-    if (userData.user[0].tip_cli.trim() === "03") {
+    if (userData.user[0].precio_a.trim() === "03") {
       subTotal = cart?.cart?.map((item) => parseFloat(item.Precio3) * item.quantity).reduce((a, b) => a + b, 0);
     }
-    if (userData.user[0].tip_cli.trim() === "04") {
+    if (userData.user[0].precio_a.trim() === "04") {
       subTotal = cart?.cart?.map((item) => parseFloat(item.Precio4) * item.quantity).reduce((a, b) => a + b, 0);
+    }
+    if (userData.user[0].precio_a.trim() === "05") {
+      subTotal = cart?.cart?.map((item) => parseFloat(item.Precio5) * item.quantity).reduce((a, b) => a + b, 0);
     }
 
     const cartPedido = cart?.cart?.map((element) => {
       let condicionalPrice;
 
-      console.log(userData.user[0].tip_cli.trim());
+      console.log(userData.user[0].precio_a.trim());
       console.log("Data: ", element);
 
-      if (userData.user[0].tip_cli.trim() === "01") condicionalPrice = element.Precio;
-      if (userData.user[0].tip_cli.trim() === "02") condicionalPrice = element.Precio2;
-      if (userData.user[0].tip_cli.trim() === "03") condicionalPrice = element.Precio3;
-      if (userData.user[0].tip_cli.trim() === "04") condicionalPrice = element.Precio4;
-      if (userData.user[0].tip_cli.trim() === "05") condicionalPrice = element.Precio5;
+      if (userData.user[0].precio_a.trim() === "01") condicionalPrice = element.Precio;
+      if (userData.user[0].precio_a.trim() === "02") condicionalPrice = element.Precio2;
+      if (userData.user[0].precio_a.trim() === "03") condicionalPrice = element.Precio3;
+      if (userData.user[0].precio_a.trim() === "04") condicionalPrice = element.Precio4;
+      if (userData.user[0].precio_a.trim() === "05") condicionalPrice = element.Precio5;
 
       return {
         CodProducto: element.CodArticulo,
@@ -203,7 +213,14 @@ const Cart = () => {
             <Loader />
           </Box>
         )}
-        <GpTable columns={columns} data={cart.cart} title="Carrito" showTotal="true" height="50vh" clickFunction={clickFunction}></GpTable>
+        <GpTable
+          columns={columns}
+          data={cart.cart}
+          title="Carrito"
+          showTotal="true"
+          height="50vh"
+          clickFunction={clickFunction}
+        ></GpTable>
         <Box
           sx={{
             justifyContent: "flex-end",

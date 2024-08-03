@@ -77,11 +77,11 @@ const GpCard = ({ data, clickFunction }) => {
               Precio:
             </Typography>
             <Typography variant="subtitle1" color="black" component="div">
-              REF: {userData.user[0].tip_cli.trim() === "01" && data.Precio}
-              {userData.user[0].tip_cli.trim() === "02" && data.Precio2}
-              {userData.user[0].tip_cli.trim() === "03" && data.Precio3}
-              {userData.user[0].tip_cli.trim() === "04" && data.Precio4}
-              {userData.user[0].tip_cli.trim() === "05" && data.Precio5}
+              REF: {userData.user[0].precio_a.trim() === "01" && data.Precio}
+              {userData.user[0].precio_a.trim() === "02" && data.Precio2}
+              {userData.user[0].precio_a.trim() === "03" && data.Precio3}
+              {userData.user[0].precio_a.trim() === "04" && data.Precio4}
+              {userData.user[0].precio_a.trim() === "05" && data.Precio5}
             </Typography>
           </Box>
           <Box

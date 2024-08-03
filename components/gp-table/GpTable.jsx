@@ -42,17 +42,20 @@ const GpTable = ({ columns, data, title, showTotal = false, clickFunction, heigh
                 onStateChange={() => {
                   if (showTotal) {
                     let total;
-                    if (userData.user[0].tip_cli.trim() === "01") {
+                    if (userData.user[0].precio_a.trim() === "01") {
                       total = data.map((item) => parseFloat(item.Precio) * item.quantity).reduce((a, b) => a + b, 0);
                     }
-                    if (userData.user[0].tip_cli.trim() === "02") {
+                    if (userData.user[0].precio_a.trim() === "02") {
                       total = data.map((item) => parseFloat(item.Precio2) * item.quantity).reduce((a, b) => a + b, 0);
                     }
-                    if (userData.user[0].tip_cli.trim() === "03") {
+                    if (userData.user[0].precio_a.trim() === "03") {
                       total = data.map((item) => parseFloat(item.Precio3) * item.quantity).reduce((a, b) => a + b, 0);
                     }
-                    if (userData.user[0].tip_cli.trim() === "04") {
+                    if (userData.user[0].precio_a.trim() === "04") {
                       total = data.map((item) => parseFloat(item.Precio4) * item.quantity).reduce((a, b) => a + b, 0);
+                    }
+                    if (userData.user[0].precio_a.trim() === "05") {
+                      total = data.map((item) => parseFloat(item.Precio5) * item.quantity).reduce((a, b) => a + b, 0);
                     }
 
                     showTotal && setTotal(total.toFixed(2));
