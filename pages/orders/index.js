@@ -15,63 +15,63 @@ const Orders = () => {
   const [message, setMessage] = React.useState("");
   const userData = useSelector((state) => state.user);
   const columns = [
-    {
-      field: "fecha",
-      headerName: "Fecha",
-      headerClassName: "primary-bg",
-      sortable: false,
-      flex: 0.7,
-    },
-    {
-      field: "fact_num",
-      headerName: "Documento",
-      headerClassName: "primary-bg",
-      sortable: false,
-      flex: 0.5,
-    },
-    {
-      field: "cliente",
-      headerName: "Cliente",
-      sortable: false,
-      flex: 1,
-      headerClassName: "primary-bg",
-      // width: 70,
-    },
-    {
-      field: "vendedor",
-      sortable: false,
-      headerName: "Vendedor",
-      flex: 1,
-      headerClassName: "primary-bg",
-    },
-    {
-      field: "estatus_profit",
-      sortable: false,
-      headerName: "Status",
-      flex: 0.5,
-      headerClassName: "primary-bg",
-    },
-    {
-      field: "subtotal",
-      sortable: false,
-      headerName: "Subtotal",
-      flex: 0.5,
-      headerClassName: "primary-bg",
-    },
-    {
-      field: "anulado",
-      sortable: false,
-      headerName: "Anulado",
-      flex: 0.5,
-      headerClassName: "primary-bg",
-      renderCell: (cellValues) => {
-        return cellValues.row.value ? (
-          <GpButton text="Sí" bgColor="#48D98A" />
-        ) : (
-          <GpButton text="No" bgColor="#EC2139" />
-        );
+      {
+          field: "fecha",
+          headerName: "Fecha",
+          headerClassName: "primary-bg",
+          sortable: false,
+          flex: 0.7,
       },
-    },
+      {
+          field: "fact_num",
+          headerName: "Documento",
+          headerClassName: "primary-bg",
+          sortable: false,
+          flex: 0.5,
+      },
+      {
+          field: "cliente",
+          headerName: "Cliente",
+          sortable: false,
+          flex: 1,
+          headerClassName: "primary-bg",
+          // width: 70,
+      },
+      {
+          field: "vendedor",
+          sortable: false,
+          headerName: "Vendedor",
+          flex: 1,
+          headerClassName: "primary-bg",
+      },
+      {
+          field: "estatus",
+          sortable: false,
+          headerName: "Status",
+          flex: 0.5,
+          headerClassName: "primary-bg",
+      },
+      {
+          field: "subtotal",
+          sortable: false,
+          headerName: "Subtotal",
+          flex: 0.5,
+          headerClassName: "primary-bg",
+      },
+      {
+          field: "anulado",
+          sortable: false,
+          headerName: "Anulado",
+          flex: 0.5,
+          headerClassName: "primary-bg",
+          renderCell: (cellValues) => {
+              return cellValues.row.value ? (
+                  <GpButton text="Sí" bgColor="#48D98A" />
+              ) : (
+                  <GpButton text="No" bgColor="#EC2139" />
+              );
+          },
+      },
   ];
 
   const showModal = (data) => {
@@ -117,6 +117,7 @@ const Orders = () => {
       // }
       const data = await res.json();
       setOrders(data);
+      console.log(data);
     };
     fetchOrders();
   }, []);
