@@ -97,8 +97,8 @@ const Orders = () => {
       //   return;
       // }
       userData?.user[0]?.roles === roles.admin
-        ? (ordersUrl = "pedidototales")
-        : (ordersUrl = `pedidosporcliente?codCliente=${userData?.user[0]?.co_cli}&status=0`);
+          ? (ordersUrl = "pedidototales")
+          : (ordersUrl = `pedidosporcliente?codCliente=${userData?.user[0]?.co_cli}&status=-1`);
       // ? setOrdersUrl(`pedidostotales`)
       // : setOrdersUrl(
       //     `pedidosporcliente?codCliente=${userData?.user[0]?.co_cli}&status=0`
